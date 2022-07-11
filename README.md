@@ -4,7 +4,7 @@
 - React Native
 - Typescript
 
-#### Ícones utilizados: [phosphor](https://phosphoricons.com/) utilizados.
+#### Ícones utilizados: [phosphor](https://phosphoricons.com/)
 #### Tab/Drawer Navigation e Autenticação utilizados: [reactnavigation](https://reactnavigation.org/docs/auth-flow/)
 
 #### QrCode e Permissão camera:
