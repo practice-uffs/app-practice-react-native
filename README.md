@@ -4,7 +4,7 @@
 - React Native
 - Typescript
 
-#### [Icons:](- https://phosphoricons.com/)
+#### [Icons:](https://phosphoricons.com/)
 #### [Tab/Drawer Navigation e Autenticação](https://reactnavigation.org/docs/auth-flow/)
 
 #### QrCode e Permissão camera:
