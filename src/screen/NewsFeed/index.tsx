@@ -5,9 +5,8 @@ import { Card, Title, Paragraph } from 'react-native-paper';
 import { styles } from './styles';
 
 // Função que pega as noticias do xml do website no Framework7
-// async getNews() {
-//   var self = this;
-//   var app = self.app;
+// function async getNews() {
+
 //   return await app.request.promise.get("https://practice.uffs.edu.br/feed.xml").then((res) => {
 //       let xmlParser = require("fast-xml-parser");
 //       let feed = xmlParser.parse(res.data);
@@ -21,6 +20,21 @@ import { styles } from './styles';
 //       return news;
 //   });
 // };
+
+
+
+
+// const parseString = require('react-native-xml2js').parseString;
+
+// fetch('https://practice.uffs.edu.br/feed.xml')
+//   .then(response => response.text())
+//   .then((response) => {
+//       parseString(response, function (err: any, result: any) {
+//           console.log(response)
+//       });
+//   }).catch((err) => {
+//       console.log('fetch', err)
+//   })
 
 
 export function NewsFeed({ navigation}: any) {
