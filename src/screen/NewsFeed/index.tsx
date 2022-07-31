@@ -1,43 +1,62 @@
-import React from 'react';
 import { ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { Card, Title, Paragraph } from 'react-native-paper';
 
 import { styles } from './styles';
 
-// Função que pega as noticias do xml do website no Framework7
-// function async getNews() {
-
-//   return await app.request.promise.get("https://practice.uffs.edu.br/feed.xml").then((res) => {
-//       let xmlParser = require("fast-xml-parser");
-//       let feed = xmlParser.parse(res.data);
-//       let news = feed.rss.channel.item;
-//       for (let i = 0; i < news.length; i++) {
-//           const content = app.storage.processHTML(news[i].content);
-//           news[i].content = content;
-//           const pubDate = app.storage.formatDate(news[i].pubDate);
-//           news[i].pubDate = pubDate;
-//       }
-//       return news;
-//   });
-// };
-
-
-
-
-// const parseString = require('react-native-xml2js').parseString;
-
-// fetch('https://practice.uffs.edu.br/feed.xml')
-//   .then(response => response.text())
-//   .then((response) => {
-//       parseString(response, function (err: any, result: any) {
-//           console.log(response)
-//       });
-//   }).catch((err) => {
-//       console.log('fetch', err)
-//   })
+import axios from "axios";
+import * as rssParser from 'react-native-rss-parser';
+import { Api } from '../../api/api';
 
 
 export function NewsFeed({ navigation}: any) {
+
+  const baseURL = "https://practice.uffs.edu.br/feed.xml";
+  const [post, setPost] = useState({});
+
+
+  console.log("teste1")
+  useEffect(() => {
+
+
+    // request da API do practice em F7
+    // Api.getNews().then((news: any) => {
+    //   setPost({ news });
+    // }).catch(() => {
+    //   console.log('deu erro');
+    // });
+
+    // axios({
+    //   method: 'get',
+    //   url: `${baseURL}`,
+    //   headers: {
+    //     'Content-Type': 'application/rss+xml'
+    //   },
+    //   httpsAgent: {
+    //     rejectUnauthorized: false
+    //   },
+    // }).then((response) => {
+    //   console.log('axios1', response.data);
+    // });
+  
+    // fetch(baseURL)
+    //   .then(response => response.text())
+    //   .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+    //   .then(data => console.log('fetch: ', data))
+
+
+    // fetch(baseURL)
+    //   .then((response) => response.text())
+    //   .then(async (responseData) => {
+    //     const rss = await rssParser.parse(responseData);
+    //     console.log('NovoTeste', rss);
+    //   });
+
+  }, []);
+  console.log("teste2")
+
+  
+
   return (
     <ScrollView style={styles.container}>
       <Card style={styles.card}>
