@@ -18,6 +18,10 @@ export function NewsFeed({ navigation}: any) {
   console.log("teste1")
   useEffect(() => {
 
+    fetch("https://practice.uffs.edu.br/feed.xml")
+    .then((res) => {
+      console.log('teste', res)            
+    });
 
     // request da API do practice em F7
     // Api.getNews().then((news: any) => {
