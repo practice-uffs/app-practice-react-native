@@ -1,9 +1,9 @@
 import 'react-native-gesture-handler';
 
 import * as React from 'react';
-import { Asterisk, House, Briefcase ,QrCode as QrCodeIcon, NewspaperClipping } from 'phosphor-react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Asterisk, House, Briefcase ,QrCode as QrCodeIcon, NewspaperClipping } from 'phosphor-react-native';
 
 import { theme } from '../../theme';
 import { toolTypes } from '../../utils/toolsTypes';
