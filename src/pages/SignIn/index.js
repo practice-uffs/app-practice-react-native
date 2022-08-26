@@ -1,12 +1,26 @@
-import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState }  from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Stack, TextInput, Button } from "@react-native-material/core";
 import { theme } from '../../styles/theme';
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import * as Animatable from 'react-native-animatable';
+import API from '../../services/api';
 
 import {useNavigation} from '@react-navigation/native'
 
 export default function SignIn() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
   const navigation = useNavigation();
+
+  async function login() {
+    setLoading(true);
+    await API.requestLogin(username, password);
+    setLoading(false);
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.backContainer}>
@@ -30,21 +44,24 @@ export default function SignIn() {
       </Animatable.View>  
       
       <Animatable.View style={styles.containerForm} animation="fadeInUp" delay={400}>
-        <Text style={ styles.iduffs }>IDUffs</Text>
-        <TextInput 
-          placeholder= "idUFFS"
-          style= {styles.input}
+        <TextInput
+        label="idUFFS"
+        variant="standard"
+        placeholder= "ex: alisson.peloso"
+        onChangeText={username => setUsername(username)}
         />
-        <Text style={ styles.senha }>Senha</Text>
         <TextInput 
-          placeholder= "Sua Senha"
-          style= {styles.input}
+        secureTextEntry={true}
+        label="Senha"
+        variant="standard"
+        onChangeText={password => setPassword(password)}
         />
-        <TouchableOpacity 
-          onPress= { () => navigation.navigate('TabNavigator')}
-        >
-          <Text style={ styles.buttonText }>Entrar</Text>
-        </TouchableOpacity>
+        <Button variant="text"
+          title="Entrar"
+          loading={loading}
+          loadingIndicatorPosition="overlay"
+          onPress={login}
+          />
       </Animatable.View>  
 
     </View>
