@@ -7,7 +7,6 @@ import {useNavigation} from '@react-navigation/native'
 
 export default function Welcome() {
   const navigation = useNavigation();
-
   return (
     <View style={styles.container}>
       <ImageBackground 
@@ -30,21 +29,17 @@ export default function Welcome() {
             resizeMode="contain"
           />
         </View>
-
-
         <Animatable.View delay={600} animation="fadeInUp" style={styles.containerForm}>
           <Text style={styles.title} >PREPARE-SE PARA A INOVAÇÂO</Text>
           <Text style={styles.subTitle} >Descubra um ambiente interativo e dinâmico para elevar sua vida acadêmica a um novo patamar</Text>
           <TouchableOpacity 
-            onPress= { () => navigation.navigate('SignIn') }
+            onPress= { () => navigation.navigate('SignInTab') }
             style={styles.button}>
             <Text style={styles.buttonText}> 
               ACESSAR COM O SEU IDUFFS
             </Text>
           </TouchableOpacity>
         </Animatable.View>
-
-
       </ImageBackground> 
     </View>
   );
