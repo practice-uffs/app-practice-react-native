@@ -1,23 +1,27 @@
-import React, { useState }  from 'react';
+import React, { useState, useContext }  from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { Stack, TextInput, Button } from "@react-native-material/core";
+import { TextInput, Button, IconButton, Snackbar } from "@react-native-material/core";
 import { theme } from '../../styles/theme';
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import * as Animatable from 'react-native-animatable';
-import API from '../../services/api';
-
-import {useNavigation} from '@react-navigation/native'
+import { AuthContext } from '../../context/auth';
+import { useNavigation } from '@react-navigation/native';
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 export default function SignIn() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPass, setShowPass] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const navigation = useNavigation();
+  const { signIn } = useContext(AuthContext);
 
   async function login() {
     setLoading(true);
-    await API.requestLogin(username, password);
+    let signned = await signIn(username, password);
+    if (!signned) {
+      setErrorMessage("Erro ao efetuar o Login");
+    }
     setLoading(false);
   }
 
@@ -34,27 +38,44 @@ export default function SignIn() {
         </TouchableOpacity>
       </View>
       <Animatable.Image 
-          animation="flipInY"
-          source={require('../../assets/practice/practice-dark.png')} 
-          style={styles.logoPractice}
-          resizeMode="contain"/>
+        animation="flipInY"
+        source={require('../../assets/practice/practice-dark.png')} 
+        style={styles.logoPractice}
+        resizeMode="contain"/>
 
       <Animatable.View style={styles.containerHeader} animation="fadeInLeft" delay={400}>
         <Text style={ styles.message }>Entre com o seu idUFFS e senha</Text>
-      </Animatable.View>  
+      </Animatable.View>
       
       <Animatable.View style={styles.containerForm} animation="fadeInUp" delay={400}>
         <TextInput
-        label="idUFFS"
-        variant="standard"
-        placeholder= "ex: alisson.peloso"
-        onChangeText={username => setUsername(username)}
+          style={{marginBottom: 10}}
+          label="idUFFS"
+          variant="standard"
+          value={username}
+          placeholder= "ex: alisson.peloso"
+          onChangeText={username => setUsername(username)}
+          autoComplete="username"
+          autoFocus
+          keyboardType="text"
+          editable={!loading}
         />
-        <TextInput 
-        secureTextEntry={true}
-        label="Senha"
-        variant="standard"
-        onChangeText={password => setPassword(password)}
+        <TextInput
+          style={{marginBottom: 10}}
+          secureTextEntry={!showPass}
+          label="Senha"
+          variant="standard"
+          onChangeText={password => setPassword(password)}
+          value={password}
+          trailing = {
+            props => (
+              <IconButton icon = {
+                props => showPass? <Icon name="eye-off" {...props}/> : <Icon name="eye" {...props}/>} 
+                onPress={() => setShowPass(!showPass)}
+              />
+            )
+          }
+          editable={!loading}
         />
         <Button variant="text"
           title="Entrar"
@@ -62,8 +83,15 @@ export default function SignIn() {
           loadingIndicatorPosition="overlay"
           onPress={login}
           />
-      </Animatable.View>  
-
+      </Animatable.View>
+      
+      {errorMessage ?
+        <Snackbar
+          message={errorMessage}
+          action={<Button variant="text" title="Fechar" compact onPress={() => setErrorMessage(null)}/>}
+          style={{ position: "absolute", start: 16, end: 16, bottom: 16 }}
+        /> : null
+      }
     </View>
   );
 } 

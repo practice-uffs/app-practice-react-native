@@ -1,44 +1,47 @@
+import React, { useState, useContext }  from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import Storage from '../services/storage'
 import Welcome from '../pages/Welcome'
 import SignIn from '../pages/SignIn'
-import TabNavigator from '../pages/TabNavigator'
+import Home from '../pages/Home'
+import { AuthContext } from '../context/auth';
 
 const Stack = createNativeStackNavigator();
 
-export default function Routes() {
-    const isSignedIn = Storage.isSignedIn();
+const AuthRoutes = () => {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{ headerShown: false }}
+            />
+        </Stack.Navigator>
+    )
+}
 
-    var routes = isSignedIn ? (
-        <>
+const AppRoutes = () => {
+    return (
+        <Stack.Navigator>
             <Stack.Screen
-                name="TabNavigator"
-                component={TabNavigator}
-                options= {{ headerShown: false}}
-            >
-            </Stack.Screen>
-        </>
-    ) : (
-        <>
-            <Stack.Screen
-                name="Welcome"
-                component={Welcome}
-                options= {{ headerShown: false}}
-            >
-            </Stack.Screen>
+            name="Welcome"
+            component={Welcome}
+            options={{ headerShown: false }}
+            />
 
             <Stack.Screen
                 name="SignIn"
                 component={SignIn}
-                options= {{ headerShown: false}}
-            >
-            </Stack.Screen> 
-        </>
-    )
-
-    return (
-        <Stack.Navigator>
-            {routes}
+                options={{ headerShown: false }}
+            />
         </Stack.Navigator>
     )
+}
+
+export default function Routes() {
+    const { isLogged } = useContext(AuthContext);
+    const { checkStorage } = useContext(AuthContext);
+
+    checkStorage();
+
+    return isLogged ? AuthRoutes() : AppRoutes();
 }

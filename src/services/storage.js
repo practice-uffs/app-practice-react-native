@@ -6,6 +6,7 @@ Storage.storeData = async (key, value) => {
 		await AsyncStorage.setItem(key, value)
 	} catch (e) {
 		console.log(e);
+		return false;
 	}
 };
 
@@ -17,33 +18,24 @@ Storage.getData = async (key) => {
 		}
 	} catch (e) {
 		console.log(e);
+		return false;
 	}
 };
 
 Storage.setUserData = async (data) => {
-	await this.storeData('user_data', JSON.stringify(data));
+	await Storage.storeData('user_data', JSON.stringify(data));
 };
 
 Storage.getUserData = async () => {
-	return JSON.parse(await this.getData('user_data'));
+	return JSON.parse(await Storage.getData('user_data'));
 };
 
 Storage.setUserToken = async (data) => {
-	await this.storeData('user_token', JSON.stringify(data));
+	await Storage.storeData('user_token', JSON.stringify(data));
 };
 
 Storage.getUserToken = async () => {
-	return JSON.parse(await this.getData('user_token'));
+	return JSON.parse(await Storage.getData('user_token'));
 };
-
-Storage.setIsSignedIn = async (data) => {
-	await this.storeData('is_signed_in', data);
-};
-
-Storage.isSignedIn = async () => {
-	console.log(await this.getData('is_signed_in'));
-	return this.getData('is_signed_in') || false;
-};
-
 
 export default Storage;
