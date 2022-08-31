@@ -7,18 +7,21 @@ import { NavigationContainer } from '@react-navigation/native'
 import Welcome from '../pages/Welcome'
 import SignIn from '../pages/SignIn'
 import Configuration from '../pages/Configuration'
+import About from '../pages/About'
 import TabNavigator from '../pages/TabNavigator'
 // import Header from '../../components/Header'
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
 
+import CustomDrawer from '../components/CustomDrawer'
+
 function DrawerRoutes(){
     return (
         <Drawer.Navigator 
             initialRouteName="Home"
+            drawerContent = {(props) => <CustomDrawer {...props} />}
             screenOptions={{
-                    drawerPosition: 'right',
                     headerTitle: 'PRACTICE',  
                 }}
             >
@@ -27,10 +30,13 @@ function DrawerRoutes(){
                 component= { TabNavigator }  
             />
             <Drawer.Screen 
+                name='Sobre'
+                component= { About }  
+            /> 
+            <Drawer.Screen 
                 name='Configurações'
                 component= { Configuration }  
-            />
-            
+            /> 
         </Drawer.Navigator>
     )
 }

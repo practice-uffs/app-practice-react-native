@@ -11,6 +11,7 @@ import Aura from '../Aura';
 import Header from '../../components/Header';
 
 import { Entypo } from '@expo/vector-icons'
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();
 
@@ -47,7 +48,7 @@ export default function TabNavigator(){
                 component={QrCode}
                 options={{
                     tabBarIcon: ({size, color}) => (
-                        <Entypo name="popup" size={size} color={color} />
+                        <Ionicons name="qr-code-outline" size={size} color={color} />
                     ),
                     headerShown: false
                 }} 
@@ -77,7 +78,7 @@ export default function TabNavigator(){
                 component={Aura}
                 options={{
                     tabBarIcon: ({size, color}) => (
-                        <Entypo name="bug" size={size} color={color} />
+                        <Ionicons name="chatbubble-ellipses-outline" size={size} color={color} />
                     ),
                     headerShown: false
                 }} 
