@@ -8,8 +8,6 @@ import NewsFeed from '../NewsFeed';
 import FuncionalitySamples from '../FuncionalitySamples';
 import Aura from '../Aura';
 
-import Header from '../../components/Header';
-
 import { Entypo } from '@expo/vector-icons'
 import Ionicons from '@expo/vector-icons/Ionicons';
 

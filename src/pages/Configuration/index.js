@@ -82,7 +82,6 @@ export default function About() {
             />
           </View>
         </View>
-  
       </View>
 
     </ScrollView>
@@ -93,21 +92,13 @@ const styles = StyleSheet.create({
   container:{
     backgroundColor: '#f1f1f1',
   },
+  contentConteiner:{
+    marginVertical: 10
+  },
   switch:{
     alignSelf: 'flex-end',
     flex: 1,
     marginRight: 3
-  },
-  whiteCard:{
-    width: '100%',
-    backgroundColor: 'white',
-  },
-  titleContainer:{
-    flexDirection: 'row',
-    marginLeft: 20,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginVertical: 10
   },
   title:{
     marginLeft: 20,
@@ -116,7 +107,11 @@ const styles = StyleSheet.create({
     color: 'grey',
     flex: 7
   },
-  contentConteiner:{
+  titleContainer:{
+    flexDirection: 'row',
+    marginLeft: 20,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
     marginVertical: 10
   },
   text:{
@@ -124,4 +119,8 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     textAlign: 'justify',
   },
+  whiteCard:{
+    width: '100%',
+    backgroundColor: 'white',
+  }
 })

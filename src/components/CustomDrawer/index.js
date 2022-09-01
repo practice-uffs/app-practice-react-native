@@ -19,6 +19,7 @@ export default function CustomDrawer(props) {
                     </View>
                 </View>
             </DrawerContentScrollView>
+            
             <View style={styles.footer}>
                 <Image 
                     animation="bounce"
@@ -37,6 +38,16 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'center',
     },
+    exitItem:{
+        borderTopColor: '#a1a1a1',
+        borderTopWidth: StyleSheet.hairlineWidth,
+    },
+    footer: {
+        height: '20%',
+        width: "100%",
+        alignItems: 'center',
+        justifyContent: 'flex-end'
+    },
     header:{
         backgroundColor: '#f1f1f1',
         height: '40%',
@@ -47,9 +58,10 @@ const styles = StyleSheet.create({
     itemList:{
         heigth: '50%'
     },
-    exitItem:{
-        borderTopColor: '#a1a1a1',
-        borderTopWidth: StyleSheet.hairlineWidth,
+    logoUffs: {
+        marginBottom: 20,
+        height: '40%',
+        width: '100%',
     },
     profileImage:{
         heigth: '55%',
@@ -68,16 +80,5 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         flex: 1
-    },
-    footer: {
-        height: '20%',
-        width: "100%",
-        alignItems: 'center',
-        justifyContent: 'flex-end'
-    },
-    logoUffs: {
-        marginBottom: 20,
-        height: '40%',
-        width: '100%',
-    },
+    }, 
 })

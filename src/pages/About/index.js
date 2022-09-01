@@ -68,15 +68,14 @@ export default function About() {
       </View>
 
       <View style={ styles.contentConteiner }>
-      <View style={ styles.titleContainer }>
-          <Ionicons name="code-slash-outline" size={32} color="grey" />
-          <Text style={ styles.title }>Licenças de software</Text>
-      </View>
+        <View style={ styles.titleContainer }>
+            <Ionicons name="code-slash-outline" size={32} color="grey" />
+            <Text style={ styles.title }>Licenças de software</Text>
+        </View>
         <Text style={ styles.textSolo }>Aqui</Text>
         <Text style={ styles.textSolo }>Vão as</Text>
         <Text style={ styles.textSolo }>Licenças</Text>
       </View>
-
     </ScrollView>
   )
 }
@@ -85,43 +84,8 @@ const styles = StyleSheet.create({
   container:{
     backgroundColor: '#f1f1f1',
   },
-  whiteCard:{
-    width: '100%',
-    backgroundColor: 'white',
-    padding: 15,
-    marginVertical: 20
-  },
-  whiteCardSolo:{
-    flexDirection: 'row',
-    width: '100%',
-    backgroundColor: 'white',
-    padding: 15,
-    marginVertical: 20
-  },
-  titleContainer:{
-    flexDirection: 'row',
-    marginLeft: 20,
-    alignItems: 'center',
-  },
-  title:{
-    marginLeft: 20,
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: 'grey'
-  },
   contentConteiner:{
     marginVertical: 10
-  },
-  text:{
-    lineHeight: 20,
-    marginVertical: 20,
-    textAlign: 'justify'
-  },
-  textSolo:{
-    marginVertical: 10,
-    marginLeft: 20,
-    textAlign: 'justify',
-    color: 'grey'
   },
   button: { 
     backgroundColor: '#4388a5',
@@ -139,5 +103,40 @@ const styles = StyleSheet.create({
     width: '20%',
     height: '100%',
     marginRight: 20
+  },
+  title:{
+    marginLeft: 20,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'grey'
+  },
+  titleContainer:{
+    flexDirection: 'row',
+    marginLeft: 20,
+    alignItems: 'center',
+  },
+  text:{
+    lineHeight: 20,
+    marginVertical: 20,
+    textAlign: 'justify'
+  },
+  textSolo:{
+    marginVertical: 10,
+    marginLeft: 20,
+    textAlign: 'justify',
+    color: 'grey'
+  },
+  whiteCard:{
+    width: '100%',
+    backgroundColor: 'white',
+    padding: 15,
+    marginVertical: 20
+  },
+  whiteCardSolo:{
+    flexDirection: 'row',
+    width: '100%',
+    backgroundColor: 'white',
+    padding: 15,
+    marginVertical: 20
   },
 })
