@@ -12,7 +12,7 @@ export default function SignIn() {
       <View style={styles.backContainer}>
         <TouchableOpacity
           style={ styles.button } 
-          onPress= { () => navigation.navigate('Welcome') }
+          onPress= { () => navigation.navigate('WelcomeTab') }
         >
           <Text style={styles.buttonTextBack}> 
             Voltar
@@ -41,7 +41,7 @@ export default function SignIn() {
           style= {styles.input}
         />
         <TouchableOpacity 
-          onPress= { () => navigation.navigate('TabNavigator')}
+          onPress= { () => navigation.navigate('DrawerTab')}
         >
           <Text style={ styles.buttonText }>Entrar</Text>
         </TouchableOpacity>
