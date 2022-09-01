@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import { theme } from '../../styles/theme';
 
 
-export var CardNews = (props) => {
+export function CardNews(props) {
   return (
     <View style={[styles.card, styles.shadow]}>
         <Image style={styles.image}  source={props.image} />

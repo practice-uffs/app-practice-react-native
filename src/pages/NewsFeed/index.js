@@ -27,7 +27,7 @@ export default function NewsFeed() {
   if(!stateFeed.length){
     getNews();
   }
-  console.log(stateFeed);
+  console.log(news);
 
   return (
     <View style={styles.container}>
