@@ -10,7 +10,7 @@ import Aura from '../Aura';
 
 import Header from '../../components/Header';
 
-import { Entypo } from '@expo/vector-icons'
+import { Entypo } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 

@@ -5,49 +5,70 @@ import { CardNews } from '../../components/CardNews';
 import Routes from '../../routes';
 import XMLParser from 'react-xml-parser';
 import axios from 'axios';
+import { Component } from 'react';
 
-export default function NewsFeed() {
-  const [ news, setNews ] = React.useState([]);
-  const stateFeed = [];
+class NewsFeed extends Component {
+  constructor(props){   
+    super(props);
+    this.state = {  
+      news: null,
+      rendering: true
+    }
+  }
 
-  const getNews = () => {
+  componentDidMount(){
+    const stateFeed = [];
     axios.get('https:/practice.uffs.edu.br/feed.xml').then((response) => {
       let feed = new XMLParser().parseFromString(response.data);
       feed.children[0].children.forEach(element => {
         if(element.name = 'item'){
           if(element.children.length == 8){
             stateFeed.push(element.children);
-            // setNews(stateFeed); //causa do loop 
+            
           }
         }
       });
+      this.setState({news: stateFeed, rendering: false});
     });
   }
 
-  if(!stateFeed.length){
-    getNews();
+  displayState = () =>{
+    console.log(this.state.news);
   }
-  console.log(news);
 
-  return (
-    <View style={styles.container}>
-      <ScrollView style={styles.scroll}>
-        <CardNews onClick={'Welcome'} image={require('../../assets/background/montanhas.png')} title="Bolsistas Bolsistas Bolsistas Bolsistas Bolsistas Bolsistas do practice atendem livre da comunidade acadêmica" date="9 de agosto de 2022" />
-        <CardNews onClick={'Welcome'} image={require('../../assets/background/montanhas.png')} title="Teste de notícia" date="22 de agosto de 2022" />
-        <CardNews onClick={'Welcome'} image={require('../../assets/background/montanhas.png')} title="Nova Notícia" />
-      </ScrollView>
-    </View>
-  );
+
+  renderCard(item){
+    return(
+      <CardNews image={'https://practice.uffs.edu.br'+(item[6].children[0].value[0] != '/' ? '/images/' : '')+item[6].children[0].value} title={item[0].value} date={item[2].value} />
+    )
+  }
+
+  render(){
+    if(this.state.rendering == true){
+      return (
+        null
+      )
+    }else{
+      return (
+        <View style={styles.container}>
+          <ScrollView style={styles.scroll}>
+            <FlatList
+              data={this.state.news}
+              renderItem={({item}) => this.renderCard(item)}
+            />
+          </ScrollView>
+        </View>
+      )
+    }
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.grayBackground,
     height: '100%',
-    overflow: 'scroll',
   },
   scroll: {
-    padding: '10px',
     paddingTop: '20px',
     paddingBottom: '20px',
   },
@@ -55,3 +76,5 @@ const styles = StyleSheet.create({
     textDecorationLine: "none",
   }
 });
+
+export default NewsFeed;
