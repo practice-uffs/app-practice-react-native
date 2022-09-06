@@ -9,7 +9,7 @@
       "**/*"
     ],
     "android": {
-      "package": "br.edu.uffs.practice.app-practice"
+      "package": "br.edu.uffs.practice.app_practice"
     }
   }
 }

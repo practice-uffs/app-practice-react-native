@@ -21,9 +21,10 @@ function AuthProvider({ children }) {
         await Storage.getUserToken().then(async (res) => {
             setToken(res);
             API.req.defaults.headers.common['Authorization'] = 'Bearer ' + res;
-
             if (await API.ping()) {
                 setIsLogged(true);
+                setUser(await Storage.getUserData());
+                setToken(await Storage.getUserToken());
             } else {
                 resetUserInfo();
             }
@@ -37,10 +38,18 @@ function AuthProvider({ children }) {
             setToken(data.passport);
             setIsLogged(true);
 
-            navigation.navigate("Home");
+
+            navigation.navigate("DrawerTab");
         }
     }
 
+    function signOut() {
+        API.requestLogout();
+        setUser({});
+        setToken("");
+        setIsLogged(false);
+        navigation.navigate("Welcome");
+    }
 
     return (
         <AuthContext.Provider value = {
@@ -50,6 +59,7 @@ function AuthProvider({ children }) {
                 isLogged,
                 token,
                 checkStorage,
+                signOut,
             }
         } >
             {children}

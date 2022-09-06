@@ -6,15 +6,13 @@ import QrCode from '../QrCode';
 import NewsFeed from '../NewsFeed';
 import FuncionalitySamples from '../FuncionalitySamples';
 import Aura from '../Aura';
-import Header from '../../components/Header';
 import { Entypo } from '@expo/vector-icons'
 
 const Tab = createBottomTabNavigator();
 
-export default function TabNavigator() {
+export default function TabNavigator({ navigation }) {
   return(
     <View style={styles.container}>
-      <Header/>
       <Tab.Navigator
         screenOptions={{
           "tabBarStyle": [

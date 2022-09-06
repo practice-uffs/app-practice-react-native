@@ -4,16 +4,14 @@ import { TextInput, Button, IconButton, Snackbar } from "@react-native-material/
 import { theme } from '../../styles/theme';
 import * as Animatable from 'react-native-animatable';
 import { AuthContext } from '../../context/auth';
-import { useNavigation } from '@react-navigation/native';
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
-export default function SignIn() {
+export default function SignIn({navigation}) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const navigation = useNavigation();
   const { signIn } = useContext(AuthContext);
 
   async function login() {
