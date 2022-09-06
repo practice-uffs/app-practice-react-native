@@ -1,22 +1,24 @@
-import React from 'react';
-import { ScrollViewComponent, StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, ScrollView, FlatList, Button} from 'react-native';
 import { theme } from '../../styles/theme';
 import { CardNews } from '../../components/CardNews';
-import Routes from '../../routes';
 import XMLParser from 'react-xml-parser';
 import axios from 'axios';
-import { Component } from 'react';
 
 class NewsFeed extends Component {
   constructor(props){   
     super(props);
     this.state = {  
-      news: null,
+      news: [],
       rendering: true
     }
   }
 
   componentDidMount(){
+    this.loadNews();
+  }
+
+  loadNews(){
     const stateFeed = [];
     axios.get('https:/practice.uffs.edu.br/feed.xml').then((response) => {
       let feed = new XMLParser().parseFromString(response.data);
@@ -24,7 +26,6 @@ class NewsFeed extends Component {
         if(element.name = 'item'){
           if(element.children.length == 8){
             stateFeed.push(element.children);
-            
           }
         }
       });
@@ -36,7 +37,6 @@ class NewsFeed extends Component {
     console.log(this.state.news);
   }
 
-
   renderCard(item){
     return(
       <CardNews image={'https://practice.uffs.edu.br'+(item[6].children[0].value[0] != '/' ? '/images/' : '')+item[6].children[0].value} title={item[0].value} date={item[2].value} />
@@ -44,19 +44,17 @@ class NewsFeed extends Component {
   }
 
   render(){
-    if(this.state.rendering == true){
+    if(this.state.rendering == true || this.state.news == undefined){
       return (
-        null
+        <Text>Carregando</Text>
       )
     }else{
       return (
         <View style={styles.container}>
-          <ScrollView style={styles.scroll}>
-            <FlatList
-              data={this.state.news}
-              renderItem={({item}) => this.renderCard(item)}
-            />
-          </ScrollView>
+          <FlatList
+            data={this.state.news}
+            renderItem={({item}) => this.renderCard(item)}
+          />
         </View>
       )
     }
@@ -69,8 +67,8 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   scroll: {
-    paddingTop: '20px',
-    paddingBottom: '20px',
+    paddingTop: 20,
+    paddingBottom: 20,
   },
   link: {
     textDecorationLine: "none",
