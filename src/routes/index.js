@@ -1,36 +1,14 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import React, { useContext, useEffect }  from 'react';
+import { AuthContext } from '../context/auth';
+import { AuthRoutes, AppRoutes } from './routes';
 
-import Welcome from '../pages/Welcome'
-import SignIn from '../pages/SignIn'
-import TabNavigator from '../pages/TabNavigator'
+export default function Routes() {
+    const { isLogged } = useContext(AuthContext);
+    const { checkStorage } = useContext(AuthContext);
+    
+    useEffect(() => {
+        checkStorage();
+    }, []);
 
-const Stack = createNativeStackNavigator();
-
-export default function Routes(){
-    return (
-        <Stack.Navigator>
-
-            <Stack.Screen
-                name="Welcome"
-                component={Welcome}
-                options= {{ headerShown: false}}
-            >
-            </Stack.Screen>
-
-            <Stack.Screen
-                name="SignIn"
-                component={SignIn}
-                options= {{ headerShown: false}}
-            >
-            </Stack.Screen>
-
-            <Stack.Screen
-                name="TabNavigator"
-                component={TabNavigator}
-                options= {{ headerShown: false}}
-            >
-            </Stack.Screen>
-
-            </Stack.Navigator>
-    )
+    return isLogged ? AuthRoutes() : AppRoutes();
 }

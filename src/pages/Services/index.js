@@ -1,11 +1,16 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { theme } from '../../styles/theme';
+import React, {useContext} from 'react';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { StyleSheet, View, Text } from 'react-native';
+
+const Drawer = createDrawerNavigator()
+import { AuthContext } from '../../context/auth';
 
 export default function Services() {
+  const {nome} = useContext(AuthContext);
+
   return (
     <View style={styles.container}>
-        <Text>Aqui ficariam os serviços do MURAL :)</Text>
+        <Text>Aqui ficariam os exemplos de funcionalidades De serviços do mural</Text>
     </View>
   );
 }
@@ -13,7 +18,7 @@ export default function Services() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.brand,
+    backgroundColor: "yellow",
     alignItems: 'center',
     justifyContent: 'center'
   },
