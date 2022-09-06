@@ -85,14 +85,14 @@ export default function QrCode() {
 }
 
 const styles = StyleSheet.create({
+  accessDenied:{
+    margin: 10
+  },
   container: {
     flex: 1,
     backgroundColor: '#FFF',
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  accessDenied:{
-    margin: 10
   },
   barcodebox: {
     flex: 1,
@@ -105,6 +105,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginTop: 20
   },
+  barCodeScanner:{
+    height:'300%', 
+    width: '100%'
+  },
   footer:{
     flex: 1,
     fontSize: 16,
@@ -116,10 +120,6 @@ const styles = StyleSheet.create({
   mainText:{
     fontSize: 16,
     margin: 10
-  },
-  barCodeScanner:{
-    height:'300%', 
-    width: '100%'
   },
   scanButton:{
     color:'#4388a5',

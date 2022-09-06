@@ -3,11 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground} from 
 import { theme } from '../../styles/theme';
 import * as Animatable from 'react-native-animatable';
 
-import {useNavigation} from '@react-navigation/native'
-
-export default function Welcome() {
-  const navigation = useNavigation();
-
+export default function Welcome({navigation}) {
   return (
     <View style={styles.container}>
       <ImageBackground 
@@ -30,8 +26,6 @@ export default function Welcome() {
             resizeMode="contain"
           />
         </View>
-
-
         <Animatable.View delay={600} animation="fadeInUp" style={styles.containerForm}>
           <Text style={styles.title} >PREPARE-SE PARA A INOVAÇÂO</Text>
           <Text style={styles.subTitle} >Descubra um ambiente interativo e dinâmico para elevar sua vida acadêmica a um novo patamar</Text>
@@ -43,8 +37,6 @@ export default function Welcome() {
             </Text>
           </TouchableOpacity>
         </Animatable.View>
-
-
       </ImageBackground> 
     </View>
   );
