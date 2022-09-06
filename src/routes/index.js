@@ -10,5 +10,5 @@ export default function Routes() {
         checkStorage();
     }, []);
 
-    return isLogged ? AuthRoutes() : AuthRoutes();
+    return isLogged ? AuthRoutes() : AppRoutes();
 }
