@@ -3,10 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground} from 
 import { theme } from '../../styles/theme';
 import * as Animatable from 'react-native-animatable';
 
-import {useNavigation} from '@react-navigation/native'
-
-export default function Welcome() {
-  const navigation = useNavigation();
+export default function Welcome({navigation}) {
   return (
     <View style={styles.container}>
       <ImageBackground 
@@ -33,7 +30,7 @@ export default function Welcome() {
           <Text style={styles.title} >PREPARE-SE PARA A INOVAÇÂO</Text>
           <Text style={styles.subTitle} >Descubra um ambiente interativo e dinâmico para elevar sua vida acadêmica a um novo patamar</Text>
           <TouchableOpacity 
-            onPress= { () => navigation.navigate('SignInTab') }
+            onPress= { () => navigation.navigate('SignIn') }
             style={styles.button}>
             <Text style={styles.buttonText}> 
               ACESSAR COM O SEU IDUFFS

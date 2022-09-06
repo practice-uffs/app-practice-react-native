@@ -1,21 +1,50 @@
-import { View, StyleSheet, Text, Image } from 'react-native'
-import React from 'react'
+import { View, StyleSheet, Text, Image, Alert } from 'react-native'
+import React, { Component, useContext } from 'react'
 import { DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
-export default function CustomDrawer(props) {
+import { AuthContext } from '../../context/auth';
+import { Avatar, Flex } from "@react-native-material/core";
+
+
+export default function CustomDrawer(props){
+    const { signOut } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Image resizeMode="contain" style={styles.profileImage} source={ require('../../assets/practice/logo-dark.png')} />
-
-                <Text style={styles.title} >Guilherme Rafael Graeff</Text>
-                <Text style={styles.subTitle} >guilherme.graeff</Text>
+                <View View style = {styles.avatar} >
+                    < Avatar label={user.name} autoColor size={100} image = {
+                    {
+                        uri: `https://cc.uffs.edu.br/avatar/iduffs/${user.username}`
+                    }
+                }
+                />
+                </View>
+                <Text style={styles.title} >{user.name}</Text>
+                <Text style={styles.subTitle} >{user.username}</Text>
             </View>
             
             <DrawerContentScrollView {...props}>
                 <View style={styles.itemList}>
                     <DrawerItemList {...props}  />
                     <View style={styles.exitItem}>
-                        <DrawerItem  label="Sair" onPress={() => alert('Saiu do app')} />
+                        <DrawerItem label="Sair" onPress={() => {
+                            Alert.alert('Sair', "Você deseja mesmo sair?", [
+                                {
+                                    text: "sim",
+                                    onPress: () => {
+                                        signOut();
+                                    }
+                                },
+                                {
+                                    text: "cancelar",
+                                }
+                            ], {
+                                cancelable: true, 
+                            });
+                            
+                        }
+                        } />
                     </View>
                 </View>
             </DrawerContentScrollView>
@@ -30,6 +59,7 @@ export default function CustomDrawer(props) {
             </View>
         </View>
     )
+    
 }
 
 const styles = StyleSheet.create({
@@ -51,7 +81,8 @@ const styles = StyleSheet.create({
     header:{
         backgroundColor: '#f1f1f1',
         height: '40%',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
+        display: 'flex',
         alignItems: 'center'
 
     },
@@ -62,11 +93,6 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         height: '40%',
         width: '100%',
-    },
-    profileImage:{
-        heigth: '55%',
-        width: '55%',
-        flex: 5
     },
     subTitle: {
         color: '#000',
@@ -80,5 +106,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         flex: 1
-    }, 
+    },
+    avatar: {
+        flex: 5,
+        display: 'flex',
+        justifyContent: 'center',
+    }
 })

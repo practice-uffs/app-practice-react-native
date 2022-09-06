@@ -1,22 +1,17 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import { StyleSheet, Image} from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
-
 import Welcome from '../pages/Welcome'
 import SignIn from '../pages/SignIn'
 import Configuration from '../pages/Configuration'
 import About from '../pages/About'
-import TabNavigator from '../pages/TabNavigator'
-// import Header from '../../components/Header'
+import Home from '../pages/Home'
+import CustomDrawer from '../components/CustomDrawer'
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
 
-import CustomDrawer from '../components/CustomDrawer'
-
-function DrawerRoutes(){
+const DrawerRoutes = () => {
     return (
         <Drawer.Navigator 
             initialRouteName="Home"
@@ -27,7 +22,7 @@ function DrawerRoutes(){
             >
             <Drawer.Screen 
                 name='Home'
-                component= { TabNavigator }  
+                component= { Home }  
             />
             <Drawer.Screen 
                 name='Sobre'
@@ -41,35 +36,34 @@ function DrawerRoutes(){
     )
 }
 
-export default function AppRoutes(){
+const AppRoutes = () => {
     return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName='WelcomeTab'>
-                <Stack.Screen
-                    name="WelcomeTab"
-                    component={Welcome}
-                    options= {{ headerShown: false}}
-                />
-                <Stack.Screen
-                    name="SignInTab"
-                    component={SignIn}
-                    options= {{ headerShown: false}}
-                />
-                <Stack.Screen
-                    name="DrawerTab"
-                    component={DrawerRoutes}
-                    options= {{ headerShown: false}}
-                />
-            </Stack.Navigator>
-        </NavigationContainer>
+        <Stack.Navigator>
+            <Stack.Screen
+                name="Welcome"
+                component={Welcome}
+                options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+                name="SignIn"
+                component={SignIn}
+                options={{ headerShown: false }}
+            />
+        </Stack.Navigator>
     )
 }
 
-const styles = StyleSheet.create({
-    container: {
-        height: '100%'
-    },
-    icon: {
-        height: '10%'
-    }
-})
+const AuthRoutes = () => {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen
+                name="DrawerTab"
+                component={ DrawerRoutes }
+                options= {{ headerShown: false}}
+            />
+        </Stack.Navigator>
+    )
+}
+
+export { AppRoutes, AuthRoutes};

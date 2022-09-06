@@ -1,18 +1,34 @@
-import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState, useContext }  from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { TextInput, Button, IconButton, Snackbar } from "@react-native-material/core";
 import { theme } from '../../styles/theme';
 import * as Animatable from 'react-native-animatable';
+import { AuthContext } from '../../context/auth';
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
-import {useNavigation} from '@react-navigation/native'
+export default function SignIn({navigation}) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [showPass, setShowPass] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const { signIn } = useContext(AuthContext);
 
-export default function SignIn() {
-  const navigation = useNavigation();
+  async function login() {
+    setLoading(true);
+    let signned = await signIn(username, password);
+    if (!signned) {
+      setErrorMessage("Erro ao efetuar o Login");
+    }
+    setLoading(false);
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.backContainer}>
         <TouchableOpacity
           style={ styles.button } 
-          onPress= { () => navigation.navigate('WelcomeTab') }
+          onPress= { () => navigation.navigate('Welcome') }
         >
           <Text style={styles.buttonTextBack}> 
             Voltar
@@ -20,33 +36,60 @@ export default function SignIn() {
         </TouchableOpacity>
       </View>
       <Animatable.Image 
-          animation="flipInY"
-          source={require('../../assets/practice/practice-dark.png')} 
-          style={styles.logoPractice}
-          resizeMode="contain"/>
+        animation="flipInY"
+        source={require('../../assets/practice/practice-dark.png')} 
+        style={styles.logoPractice}
+        resizeMode="contain"/>
 
       <Animatable.View style={styles.containerHeader} animation="fadeInLeft" delay={400}>
         <Text style={ styles.message }>Entre com o seu idUFFS e senha</Text>
-      </Animatable.View>  
+      </Animatable.View>
       
       <Animatable.View style={styles.containerForm} animation="fadeInUp" delay={400}>
-        <Text style={ styles.iduffs }>IDUffs</Text>
-        <TextInput 
-          placeholder= "idUFFS"
-          style= {styles.input}
+        <TextInput
+          style={{marginBottom: 10}}
+          label="idUFFS"
+          variant="standard"
+          value={username}
+          placeholder= "ex: alisson.peloso"
+          onChangeText={username => setUsername(username)}
+          autoComplete="username"
+          autoFocus
+          keyboardType="text"
+          editable={!loading}
         />
-        <Text style={ styles.senha }>Senha</Text>
-        <TextInput 
-          placeholder= "Sua Senha"
-          style= {styles.input}
+        <TextInput
+          style={{marginBottom: 10}}
+          secureTextEntry={!showPass}
+          label="Senha"
+          variant="standard"
+          onChangeText={password => setPassword(password)}
+          value={password}
+          trailing = {
+            props => (
+              <IconButton icon = {
+                props => showPass? <Icon name="eye-off" {...props}/> : <Icon name="eye" {...props}/>} 
+                onPress={() => setShowPass(!showPass)}
+              />
+            )
+          }
+          editable={!loading}
         />
-        <TouchableOpacity 
-          onPress= { () => navigation.navigate('DrawerTab')}
-        >
-          <Text style={ styles.buttonText }>Entrar</Text>
-        </TouchableOpacity>
-      </Animatable.View>  
-
+        <Button variant="text"
+          title="Entrar"
+          loading={loading}
+          loadingIndicatorPosition="overlay"
+          onPress={login}
+          />
+      </Animatable.View>
+      
+      {errorMessage ?
+        <Snackbar
+          message={errorMessage}
+          action={<Button variant="text" title="Fechar" compact onPress={() => setErrorMessage(null)}/>}
+          style={{ position: "absolute", start: 16, end: 16, bottom: 16 }}
+        /> : null
+      }
     </View>
   );
 } 
