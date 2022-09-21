@@ -4,10 +4,20 @@ import { theme } from '../../styles/theme';
 import Lottie from 'lottie-react-native';
 import { NativeBaseProvider, Text, Box, Container, VStack } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
+import RuWidget from '../../components/RuWidget';
 
 function Advice() {
 	return (
-		<Box style={{flexDirection: 'row', flexWrap: 'nowrap', justifyContent: 'space-around'}}>
+		<View style={{
+			marginHorizontal: 15
+		}}>
+			<View style = {
+				{
+					flexDirection: 'row',
+					flexWrap: 'nowrap',
+					justifyContent: 'space-around',
+				}
+			} >
 				<Container View style = {
 					{
 						flex:1,
@@ -15,7 +25,7 @@ function Advice() {
 						justifyContent: "center"
 					}
 				} >
-					<Text bold fontSize="xl"  numberOfLines={1} >Em Desenvolvimento!</Text>
+					<Text bold fontSize="xl">Em Desenvolvimento!</Text>
 					<Text>As funcionalidades a seguir estão em desenvolvimento. Isso é apenas uma demonstração!</Text>
 				</Container>
 
@@ -33,16 +43,19 @@ function Advice() {
 						}
 						/>
 				</View>
-			</Box>
+			</View>
+		</View>
 	)
 }
 
-export default function FuncionalitySamples() {
+export default function FuncionalitySamples({navigation}) {
 	return (
 		<NativeBaseProvider>
-			<ScrollView style = {styles.backContainer} >
-				<VStack VStack >
-					<Advice/>
+			<ScrollView>
+				<VStack>
+					<Advice />
+					
+					<RuWidget navigation={navigation}/>
 				</VStack>
 			</ScrollView>
 		</NativeBaseProvider>
@@ -52,8 +65,6 @@ export default function FuncionalitySamples() {
 const styles = StyleSheet.create({
 	backContainer: {
 		width: '100%',
-		marginLeft: 15,
-		marginRight: 15,
 	},
 	button: {
 		width: '20%',

@@ -7,6 +7,7 @@ import Configuration from '../pages/Configuration'
 import About from '../pages/About'
 import Home from '../pages/Home'
 import CustomDrawer from '../components/CustomDrawer'
+import RuMenu from '../pages/RuMenu'
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -62,6 +63,10 @@ const AuthRoutes = () => {
                 component={ DrawerRoutes }
                 options= {{ headerShown: false}}
             />
+            <Stack.Screen 
+                name='Cardápio RU'
+                component= { RuMenu }  
+            /> 
         </Stack.Navigator>
     )
 }
