@@ -5,6 +5,7 @@ import { theme } from '../../styles/theme';
 import * as Animatable from 'react-native-animatable';
 import { AuthContext } from '../../context/auth';
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import {Picker} from '@react-native-picker/picker';
 
 export default function SignIn({navigation}) {
   const [username, setUsername] = useState('');
@@ -13,10 +14,11 @@ export default function SignIn({navigation}) {
   const [showPass, setShowPass] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const { signIn } = useContext(AuthContext);
+  const [campus, setCampus] = useState(null);
 
   async function login() {
     setLoading(true);
-    let signned = await signIn(username, password);
+    let signned = await signIn(username, password, campus);
     if (!signned) {
       setErrorMessage("Erro ao efetuar o Login");
     }
@@ -75,7 +77,22 @@ export default function SignIn({navigation}) {
           }
           editable={!loading}
         />
+        <Picker
+          style={{ marginBottom: 10 }}
+          mode={"dropdown"}
+          selectedValue={campus}
+          onValueChange={(itemValue, itemIndex) =>
+            setCampus(itemValue)
+          }>
+          <Picker.Item label="Cerro Largo" value="cerro-largo" />
+          <Picker.Item label="Chapecó" value="chapeco" />
+          <Picker.Item label="Erechim" value="erechim" />
+          <Picker.Item label="Laranjeiras do Sul" value="laranjeiras-do-sul" />
+          <Picker.Item label="Passo Fundo" value="passo-fundo" />
+          <Picker.Item label="Realeza" value="realeza" />
+        </Picker>
         <Button variant="text"
+          disabled={(username == '' || password=='' || !campus)}
           title="Entrar"
           loading={loading}
           loadingIndicatorPosition="overlay"
