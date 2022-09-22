@@ -39,7 +39,7 @@ class NewsFeed extends Component {
 
   renderCard(item){
     return(
-      <CardNews image={'https://practice.uffs.edu.br'+(item[6].children[0].value[0] != '/' ? '/images/' : '')+item[6].children[0].value} title={item[0].value} date={item[2].value} />
+      <CardNews image={'https://practice.uffs.edu.br'+(item[6].children[0].value[0] != '/' ? '/images/' : '')+item[6].children[0].value} content={item[7].value} title={item[0].value} date={item[2].value} />
     )
   }
 
