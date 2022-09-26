@@ -14,7 +14,7 @@ export default function SignIn({navigation}) {
   const [errorMessage, setErrorMessage] = useState(null);
   const { signIn } = useContext(AuthContext);
 
-  async function login() {
+  async function login({navigation}) {
     setLoading(true);
     let signned = await signIn(username, password);
     if (!signned) {
