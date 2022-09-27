@@ -14,7 +14,7 @@ export default function SignIn({navigation}) {
   const [showPass, setShowPass] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const { signIn } = useContext(AuthContext);
-  const [campus, setCampus] = useState(null);
+  const [campus, setCampus] = useState('cerro-largo');
 
   async function login() {
     setLoading(true);
