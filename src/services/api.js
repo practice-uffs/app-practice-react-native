@@ -82,4 +82,16 @@ API.getRequestedServices = async function (page = 1) {
 	});
 };
 
+API.getRuMenu = async function (campus) {
+	return await this.req.get(this.url + `ru-menu/?campus=${campus}`).then((res) => {
+		if (res.status != 200) {
+			return false;
+		}
+		return res.data;
+	}).catch((err) => {
+		console.log(err);
+		return false;
+	})
+}
+
 export default API;

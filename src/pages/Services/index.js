@@ -7,9 +7,9 @@ const Drawer = createDrawerNavigator()
 import { AuthContext } from '../../context/auth';
 import ServicesTabs from './servicesTabs';
 
-export default function Services() {
-  const { nome } = useContext(AuthContext);
-  
+export default function Services({navigation}) {
+  const {nome} = useContext(AuthContext);
+
   return (
     <Block style={{display: 'flex', height:'100%'}}>
       <Block marginLeft={20}  marginRight={20} marginBottom={10}>

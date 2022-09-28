@@ -14,7 +14,7 @@ import { Entypo } from '@expo/vector-icons'
 
 const Tab = createBottomTabNavigator();
 
-export default function TabNavigator(){
+export default function TabNavigator({navigation}){
     return(
         <View style={styles.container}>
             <Header />
