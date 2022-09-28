@@ -11,8 +11,8 @@ export default function Services() {
   const { nome } = useContext(AuthContext);
   
   return (
-    <View>
-      <Block margin={20}>
+    <Block style={{display: 'flex', height:'100%'}}>
+      <Block marginLeft={20}  marginRight={20} marginBottom={10}>
         <Lottie
           source = {
             require("../../assets/lottie/services.json")
@@ -21,12 +21,12 @@ export default function Services() {
           autoPlay
           style = {
             {
-              width: '75%',
+              width: '60%',
               alignSelf: 'center'
             }
           }
         />
-        <Text h5>
+        <Text h6 bold>
           Serviços
         </Text>
         <Block marginTop={10} marginBottom={10}>
@@ -40,10 +40,8 @@ export default function Services() {
           </Button>
         </Block>
       </Block>
-      <Block>
-        <ServicesTabs/>
-      </Block>
-    </View>
+      <ServicesTabs/>
+    </Block>
   );
 }
 

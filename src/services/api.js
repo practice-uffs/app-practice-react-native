@@ -54,4 +54,32 @@ API.ping = async function () {
 	})
 }
 
+API.getRequestedServices = async function (page = 1) {
+	return await this.req.get(this.url + "mural/orders?page="+page).then(async (res) => {
+		let data = res.data;
+		if (res.status != 200) {
+			return [];
+		}
+		let services = data.data;
+		let meta = data.meta;
+		let servicesToSave = [];
+		
+		for (let i = 0; i < services.length; i++) {
+			servicesToSave[i] = {
+				id: services[i].id,
+				status: services[i].status,
+				title: services[i].title,
+				description: services[i].description,
+				created_at: services[i].created_at
+			};
+		}
+
+		if (meta.current_page != meta.last_page) {
+			return servicesToSave.push(await API.getRequestedServices(page += 1));
+		}
+		
+		return servicesToSave;
+	});
+};
+
 export default API;
