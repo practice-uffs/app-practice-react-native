@@ -6,6 +6,8 @@ import { Text, Block, Button } from 'galio-framework'
 const Drawer = createDrawerNavigator()
 import { AuthContext } from '../../context/auth';
 import ServicesTabs from './servicesTabs';
+import { Divider } from "@react-native-material/core";
+
 
 export default function Services({navigation}) {
   const {nome} = useContext(AuthContext);

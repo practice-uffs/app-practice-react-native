@@ -46,18 +46,18 @@ const RuMenu = ({ route, navigation }) => {
     
     return (
         <NativeBaseProvider>
-            <View height='100%'>
+            <View flex={1}>
                 <Block padding={7} center>
                     <Text bold h5 >{campusName}</Text>
                 </Block>
                 {
                     loading ? 
-                    <Block height='100%' middle >
+                    <Block flex={1} middle >
                         <ActivityIndicator size="large" color={theme.COLORS.PRIMARY} />
                     </Block>
                     :
                     <Block padding={7} shadow backgroundColor={theme.COLORS.WHITE} style={{borderRadius: 20}}>
-                            {data.map(element => <ListItem
+                            {data.map((element, index) => <ListItem key={index}
                             title={element.title}
                             leading={<Icon name="calendar" size={24} />}
                             trailing={props => <Icon name="chevron-right" {...props} />}
@@ -77,7 +77,7 @@ const RuMenu = ({ route, navigation }) => {
                             </Text>
                         </Block>
                         {menuContent.map(
-                            element => <Actionsheet.Item isDisabled>
+                            (element, index) => <Actionsheet.Item isDisabled key={index}>
                                 {element}
                             </Actionsheet.Item>
                         )}
