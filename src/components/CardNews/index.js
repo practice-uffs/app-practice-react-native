@@ -3,8 +3,10 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView } from 'r
 import { ScrollView } from 'react-native-gesture-handler';
 import { theme } from '../../styles/theme';
 
+import { useNavigation } from "@react-navigation/native";
 
 export function CardNews(props) {
+  const navigation = useNavigation();
 
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -17,13 +19,21 @@ export function CardNews(props) {
   }
 
   return(
-    <View style={[styles.card, styles.shadow, isExpanded ? styles.cardExpanded : '' ]}>
+    <View style={[styles.card, styles.shadow ]}>
       <SafeAreaView>
         <ScrollView>
-          <TouchableOpacity onPress={handleClick}>
+          <TouchableOpacity 
+            onPress={() => {
+              navigation.navigate('News', {
+                title: props.title,
+                image: props.image,
+                content: props.content,
+                date: props.date
+              });
+            }}>
             <Image style={styles.image} height="300px" source={{uri : props.image}} />
             <Text style={styles.title}>{props.title}</Text>
-            <View style={[isExpanded ? styles.textVisible : styles.textHidden]}><Text>{props.content}</Text></View>
+           
             <Text style={styles.date}>{formatDate(props.date)}</Text>
           </TouchableOpacity>
         </ScrollView>

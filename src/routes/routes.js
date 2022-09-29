@@ -6,6 +6,7 @@ import SignIn from '../pages/SignIn'
 import Configuration from '../pages/Configuration'
 import About from '../pages/About'
 import Home from '../pages/Home'
+import News from '../pages/News'
 import CustomDrawer from '../components/CustomDrawer'
 
 const Stack = createNativeStackNavigator()
@@ -61,6 +62,11 @@ const AuthRoutes = () => {
                 name="DrawerTab"
                 component={ DrawerRoutes }
                 options= {{ headerShown: false}}
+            />
+            <Stack.Screen
+                options={{headerShown: false}}
+                name="News"
+                component={ News }
             />
         </Stack.Navigator>
     )
