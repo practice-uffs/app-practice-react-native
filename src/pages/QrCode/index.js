@@ -4,7 +4,7 @@ import { theme } from '../../styles/theme';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import QrCodeListItem from '../../components/QrCodeListItem';
 
-export default function QrCode() {
+export default function QrCode({navigation}) {
   const [hasPermission, setHasPermission] = useState(null)
   const [scanned, setScanned] = useState(false)
   const [allCodes, setAllCodes] = useState([])

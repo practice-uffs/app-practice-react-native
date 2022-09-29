@@ -5,7 +5,7 @@ import { StyleSheet, View, Text } from 'react-native';
 const Drawer = createDrawerNavigator()
 import { AuthContext } from '../../context/auth';
 
-export default function Services() {
+export default function Services({navigation}) {
   const {nome} = useContext(AuthContext);
 
   return (
