@@ -13,7 +13,7 @@ API.req = axios.create({
 	baseURL: API.url,
 });
 
-API.requestLogin = async function (username, password) {
+API.requestLogin = async function (username, password, campus) {
 	return await this.req.post(this.url + "auth", {
 		"user": username,
 		"password": password,
@@ -23,8 +23,7 @@ API.requestLogin = async function (username, password) {
 		if (data.passport) {
 			//add data to Storage
 			Storage.setUserToken(data.passport);
-			Storage.setUserData(data.user);
-
+			Storage.setUserData(Object.assign(data.user, {campus: campus}));
 			this.req.defaults.headers.common['Authorization'] = 'Bearer ' + data.passport
 			return data;
 		} else {

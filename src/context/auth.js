@@ -31,13 +31,13 @@ function AuthProvider({ children }) {
         }).catch((err) => resetUserInfo());
     }    
 
-    async function signIn(user, password) {
-        data = await API.requestLogin(user, password);
+    async function signIn(user, password, campus) {
+
+        data = await API.requestLogin(user, password, campus);
         if (data) {
             setUser(data.user);
             setToken(data.passport);
             setIsLogged(true);
-
 
             navigation.navigate("DrawerTab");
         }
