@@ -1,14 +1,43 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import React, { Component, useState } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { theme } from '../../styles/theme';
 
+import { useNavigation } from "@react-navigation/native";
 
 export function CardNews(props) {
+  const navigation = useNavigation();
+
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  function handleClick() {
+    // 👇️ toggle
+    setIsExpanded(current => !current);
+
+    // 👇️ or set to true
+    // setIsActive(true);
+  }
+
   return(
-    <View style={[styles.card, styles.shadow]}>
-        <Image style={styles.image} height="300px" width="500px" source={{uri : props.image}} />
-        <Text style={styles.title}>{props.title}</Text>
-        <Text style={styles.date}>{formatDate(props.date)}</Text>
+    <View style={[styles.card, styles.shadow ]}>
+      <SafeAreaView>
+        <ScrollView>
+          <TouchableOpacity 
+            onPress={() => {
+              navigation.navigate('News', {
+                title: props.title,
+                image: props.image,
+                content: props.content,
+                date: props.date
+              });
+            }}>
+            <Image style={styles.image} height="300px" source={{uri : props.image}} />
+            <Text style={styles.title}>{props.title}</Text>
+           
+            <Text style={styles.date}>{formatDate(props.date)}</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </SafeAreaView>
     </View>
   );
 
@@ -30,7 +59,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingBottom: 20,
     borderRadius: 10,
+    zIndex: 0,
+    elevation:0
   },
+
   image: {
     height: 250,
     borderTopRightRadius: 10,
@@ -54,5 +86,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 10,
     shadowOffset: {width: 0, height: 0},
+  },
+  textHidden: {
+    display: 'none'
+  },
+  textVisible: {
+    margin: 20
   }
+
 })
