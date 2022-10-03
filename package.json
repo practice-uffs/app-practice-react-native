@@ -48,6 +48,7 @@
     "react-native-svg": "^12.1.1",
     "react-native-video": "^6.0.0-alpha.1",
     "react-native-web": "~0.18.7",
+    "react-native-webview": "^11.23.1",
     "react-navigation": "^4.4.4",
     "react-xml-parser": "^1.1.8",
     "styled-components": "^5.3.5"
