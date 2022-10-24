@@ -19,7 +19,7 @@
 - É necessário instalar o app do expo em seu smartphone para ler o QR ao iniciar o projeto com `expo start`, dessa forma o aplicativo será emulado.
 
 #### Clonar o repositório
-- `git clone https://github.com/CleissonVieira/app-practice-react-native.git`
+- `git clone https://github.com/practice-uffs/app-practice-react-native.git`
 
 #### Instalar as dependencias do projeto
 - `cd app-practice-react-native`
