@@ -1,4 +1,4 @@
-import React, { useState, useContext }  from 'react';
+import React, { useState, useContext, useEffect }  from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { TextInput, Button, IconButton, Snackbar } from "@react-native-material/core";
 import { theme } from '../../styles/theme';
@@ -6,6 +6,13 @@ import * as Animatable from 'react-native-animatable';
 import { AuthContext } from '../../context/auth';
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import {Picker} from '@react-native-picker/picker';
+import CountDown from 'react-native-countdown-component';
+
+
+import {
+	LOGIN_ATTEMPTS,
+  TIMEOUT_LOGIN
+} from '@env';
 
 export default function SignIn({navigation}) {
   const [username, setUsername] = useState('');
@@ -15,15 +22,45 @@ export default function SignIn({navigation}) {
   const [errorMessage, setErrorMessage] = useState(null);
   const { signIn } = useContext(AuthContext);
   const [campus, setCampus] = useState('cerro-largo');
-
+  const [attempts, setAttempts] = useState(LOGIN_ATTEMPTS);
+  const [timeoutLogin, setTimeoutLogin] = useState(TIMEOUT_LOGIN);
+  const [disabledLogin, setDisabledLogin] = useState(false);
+  
   async function login({navigation}) {
     setLoading(true);
+
     let signned = await signIn(username, password, campus);
     if (!signned) {
+     
+      //login lock control
+      if (attempts <= 1) {
+        setAttempts(attempts-1);
+        setTimeoutLogin(TIMEOUT_LOGIN);
+        setDisabledLogin(true);
+      }else{
+        setAttempts(attempts-1);
+      }
       setErrorMessage("Erro ao efetuar o Login");
     }
-    setLoading(false);
+    setLoading(false);   
   }
+
+  //this will reset lock login
+  async function unlockLogin(){
+    setDisabledLogin(false);
+    setAttempts(LOGIN_ATTEMPTS);
+    setTimeoutLogin(TIMEOUT_LOGIN);
+  }
+
+  //this listen lock login to decrement timer
+  useEffect(() => {
+    if(disabledLogin && timeoutLogin > 0){
+      setTimeout(function(){ setTimeoutLogin(timeoutLogin-1) }, 1000);
+    }else{
+      unlockLogin();
+    }
+
+  }, [timeoutLogin, disabledLogin]);
 
   return (
     <View style={styles.container}>
@@ -41,15 +78,34 @@ export default function SignIn({navigation}) {
         animation="flipInY"
         source={require('../../assets/practice/practice-dark.png')} 
         style={styles.logoPractice}
-        resizeMode="contain"/>
+        resizeMode="contain"
+      />
 
       <Animatable.View style={styles.containerHeader} animation="fadeInLeft" delay={400}>
         <Text style={ styles.message }>Entre com o seu idUFFS e senha</Text>
       </Animatable.View>
       
       <Animatable.View style={styles.containerForm} animation="fadeInUp" delay={400}>
+        <View style={[styles.input, {borderColor: '#333', borderBottomWidth: 1}] }>
+          <Picker
+            mode={"dropdown"}
+            name='Campus'
+            selectedValue={campus}
+            onValueChange={(itemValue, itemIndex) =>
+              setCampus(itemValue)
+            }>
+            <Picker.Item label="Cerro Largo" value="cerro-largo" />
+            <Picker.Item label="Chapecó" value="chapeco" />
+            <Picker.Item label="Erechim" value="erechim" />
+            <Picker.Item label="Laranjeiras do Sul" value="laranjeiras-do-sul" />
+            <Picker.Item label="Passo Fundo" value="passo-fundo" />
+            <Picker.Item label="Realeza" value="realeza" />
+          </Picker>
+        </View>
+
         <TextInput
-          style={{marginBottom: 10}}
+          style={styles.input}
+          name='idUFFS'
           label="idUFFS"
           variant="standard"
           value={username}
@@ -60,9 +116,11 @@ export default function SignIn({navigation}) {
           keyboardType="text"
           editable={!loading}
         />
+
         <TextInput
-          style={{marginBottom: 10}}
+          style={styles.input}
           secureTextEntry={!showPass}
+          name='passIdUFFS'
           label="Senha"
           variant="standard"
           onChangeText={password => setPassword(password)}
@@ -77,22 +135,19 @@ export default function SignIn({navigation}) {
           }
           editable={!loading}
         />
-        <Picker
-          style={{ marginBottom: 10 }}
-          mode={"dropdown"}
-          selectedValue={campus}
-          onValueChange={(itemValue, itemIndex) =>
-            setCampus(itemValue)
-          }>
-          <Picker.Item label="Cerro Largo" value="cerro-largo" />
-          <Picker.Item label="Chapecó" value="chapeco" />
-          <Picker.Item label="Erechim" value="erechim" />
-          <Picker.Item label="Laranjeiras do Sul" value="laranjeiras-do-sul" />
-          <Picker.Item label="Passo Fundo" value="passo-fundo" />
-          <Picker.Item label="Realeza" value="realeza" />
-        </Picker>
+
+        {disabledLogin && 
+        <View style={[styles.blockedLoginMessage]}>
+          <Text style={{float:'left', width: 'auto', paddingRight: 10}}>Bloqueado por: {timeoutLogin} segundos</Text>
+        </View>  
+        }
+
+        {!disabledLogin && 
+        <View style={styles.blockedLoginMessage}><Text>Tentativas restantes: { attempts }</Text></View>
+        }
+
         <Button variant="text"
-          disabled={(username == '' || password=='' || !campus)}
+          disabled={(username == '' || password=='' || !campus || disabledLogin || loading )}
           title="Entrar"
           loading={loading}
           loadingIndicatorPosition="overlay"
@@ -133,7 +188,7 @@ const styles = StyleSheet.create({
     fontSize: 14
   },
   container: {
-    flex: 2,
+    flex: 1,
     backgroundColor: theme.colors.whiteBackground,
     alignItems: 'center',
     justifyContent: 'center',
@@ -141,7 +196,6 @@ const styles = StyleSheet.create({
   containerHeader: {
     width: '60%',
     flex:1,
- 
   },
   containerForm: {
     flex: 3,
@@ -153,9 +207,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   input: {
-    borderBottomWidth: 1,
-    height: 40,
-    marginBottom: 12
+    marginBottom: 20, 
+    paddingLeft: 0
+
   },
   logoPractice: {
     flex: 2,
@@ -169,5 +223,20 @@ const styles = StyleSheet.create({
   },
   senha:{
     fontSize: 20,
+  },
+  blockedLoginMessage:{
+    float: 'left',
+    position: 'relative',
+    flexDirection: 'row',
+    marginTop: 10,
+    marginBottom: 15,
+    lineHeight: 10,
+    fontSize: 20
+  },
+  countDown:{
+    float: 'left',
+    width: 20,
+    height: 15,
+    marginTop: -6
   }
 });
