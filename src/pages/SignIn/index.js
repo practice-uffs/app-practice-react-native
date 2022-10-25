@@ -1,32 +1,69 @@
 import React, { useState, useContext }  from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { TextInput, Button, IconButton, Snackbar } from "@react-native-material/core";
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Keyboard} from 'react-native';
+import { Button, Snackbar } from "@react-native-material/core";
 import { theme } from '../../styles/theme';
 import * as Animatable from 'react-native-animatable';
 import { AuthContext } from '../../context/auth';
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import {Picker} from '@react-native-picker/picker';
+import Input from '../../components/Inputs/Input';
+import Loader from '../../components/Loaders/loader';
 
 export default function SignIn({navigation}) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [showPass, setShowPass] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = React.useState(false);
   const { signIn } = useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [campus, setCampus] = useState('cerro-largo');
+  const [errors, setErrors] = React.useState({});
+  const [inputs, setInputs] = React.useState({
+    iduffs: '',
+    password: ''
+  });
 
-  async function login({navigation}) {
+  async function login() {
     setLoading(true);
-    let signned = await signIn(username, password, campus);
+    let signned = await signIn(inputs.iduffs, inputs.password, campus);
     if (!signned) {
       setErrorMessage("Erro ao efetuar o Login");
     }
     setLoading(false);
   }
 
+  const validate = () => {
+    Keyboard.dismiss();
+    let isValid = true;
+
+    if (!inputs.iduffs) {
+      handleError('Por favor, insira seu idUFFS', 'iduffs');
+      isValid = false;
+    } else if (inputs.iduffs.length < 5) {
+      handleError('Tamanho mínimo de idUFFS é de 5 caracteres', 'iduffs');
+      isValid = false;
+    }
+
+    if (!inputs.password) {
+      handleError('Por favor, insira sua senha', 'password');
+      isValid = false;
+    } else if (inputs.password.length < 5) {
+      handleError('Tamanho mínimo de senha é de 5 caracteres', 'password');
+      isValid = false;
+    }
+
+    if (isValid) {
+      login();
+    }
+  };
+
+  const handleOnchange = (text, input) => {
+    setInputs(prevState => ({...prevState, [input]: text}));
+  };
+
+  const handleError = (error, input) => {
+    setErrors(prevState => ({...prevState, [input]: error}));
+  };
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={{backgroundColor: theme.colors.whiteBackground, flex: 1}}>
+      <Loader visible={loading} />
       <View style={styles.backContainer}>
         <TouchableOpacity
           style={ styles.button } 
@@ -37,53 +74,36 @@ export default function SignIn({navigation}) {
           </Text>
         </TouchableOpacity>
       </View>
-      <Animatable.Image 
-        animation="flipInY"
-        source={require('../../assets/practice/practice-dark.png')} 
-        style={styles.logoPractice}
-        resizeMode="contain"/>
 
       <Animatable.View style={styles.containerHeader} animation="fadeInLeft" delay={400}>
         <Text style={ styles.message }>Entre com o seu idUFFS e senha</Text>
       </Animatable.View>
       
       <Animatable.View style={styles.containerForm} animation="fadeInUp" delay={400}>
-        <TextInput
-          style={{marginBottom: 10}}
+        <Input
+          onChangeText={text => handleOnchange(text, 'iduffs')}
+          onFocus={() => handleError(null, 'iduffs')}
+          iconName="account-outline"
           label="idUFFS"
-          variant="standard"
-          value={username}
-          placeholder= "ex: alisson.peloso"
-          onChangeText={username => setUsername(username)}
-          autoComplete="username"
-          autoFocus
-          keyboardType="text"
-          editable={!loading}
+          placeholder="Digite seu idUFFS"
+          error={errors.iduffs}
         />
-        <TextInput
-          style={{marginBottom: 10}}
-          secureTextEntry={!showPass}
+        <Input
+          onChangeText={text => handleOnchange(text, 'password')}
+          onFocus={() => handleError(null, 'password')}
+          iconName="lock-outline"
           label="Senha"
-          variant="standard"
-          onChangeText={password => setPassword(password)}
-          value={password}
-          trailing = {
-            props => (
-              <IconButton icon = {
-                props => showPass? <Icon name="eye-off" {...props}/> : <Icon name="eye" {...props}/>} 
-                onPress={() => setShowPass(!showPass)}
-              />
-            )
-          }
-          editable={!loading}
-        />
+          placeholder="Digite sua senha"
+          error={errors.password}
+          password
+          />
         <Picker
           style={{ marginBottom: 10 }}
           mode={"dropdown"}
           selectedValue={campus}
           onValueChange={(itemValue, itemIndex) =>
             setCampus(itemValue)
-          }>
+        }>
           <Picker.Item label="Cerro Largo" value="cerro-largo" />
           <Picker.Item label="Chapecó" value="chapeco" />
           <Picker.Item label="Erechim" value="erechim" />
@@ -91,13 +111,7 @@ export default function SignIn({navigation}) {
           <Picker.Item label="Passo Fundo" value="passo-fundo" />
           <Picker.Item label="Realeza" value="realeza" />
         </Picker>
-        <Button variant="text"
-          disabled={(username == '' || password=='' || !campus)}
-          title="Entrar"
-          loading={loading}
-          loadingIndicatorPosition="overlay"
-          onPress={login}
-          />
+        <Button title="Entrar" onPress={validate} />
       </Animatable.View>
       
       {errorMessage ?
@@ -107,7 +121,7 @@ export default function SignIn({navigation}) {
           style={{ position: "absolute", start: 16, end: 16, bottom: 16 }}
         /> : null
       }
-    </View>
+    </SafeAreaView>
   );
 } 
 
@@ -138,17 +152,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
   containerHeader: {
-    width: '60%',
-    flex:1,
- 
+    width: '100%',
+    flex: 1,
+    justifyContent: 'center'
   },
+
   containerForm: {
     flex: 3,
     width: '100%',
     paddingStart:'5%',
     paddingEnd:'5%',
   },
+
   iduffs: {
     fontSize: 20,
   },
@@ -157,14 +174,11 @@ const styles = StyleSheet.create({
     height: 40,
     marginBottom: 12
   },
-  logoPractice: {
-    flex: 2,
-    width: '80%',
-  },
   message: {
     marginTop: 10,
-    fontSize: 15,
-    color: '#666666',
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#003753',
     textAlign: 'center',
   },
   senha:{
