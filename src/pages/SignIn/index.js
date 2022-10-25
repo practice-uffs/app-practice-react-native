@@ -1,12 +1,18 @@
-import React, { useState, useContext }  from 'react';
+import React, { useState, useContext, useEffect }  from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Keyboard} from 'react-native';
-import { Button, Snackbar } from "@react-native-material/core";
+import { TextInput, Button, IconButton, Snackbar } from "@react-native-material/core";
 import { theme } from '../../styles/theme';
 import * as Animatable from 'react-native-animatable';
 import { AuthContext } from '../../context/auth';
 import {Picker} from '@react-native-picker/picker';
 import Input from '../../components/Inputs/Input';
 import Loader from '../../components/Loaders/loader';
+
+
+import {
+	LOGIN_ATTEMPTS,
+  TIMEOUT_LOGIN
+} from '@env';
 
 export default function SignIn({navigation}) {
   const [loading, setLoading] = React.useState(false);
@@ -19,13 +25,26 @@ export default function SignIn({navigation}) {
     password: ''
   });
 
-  async function login() {
+  const [attempts, setAttempts] = useState(LOGIN_ATTEMPTS);
+  const [timeoutLogin, setTimeoutLogin] = useState(TIMEOUT_LOGIN);
+  const [disabledLogin, setDisabledLogin] = useState(false);
+  
+  async function login({navigation}) {
     setLoading(true);
     let signned = await signIn(inputs.iduffs, inputs.password, campus);
     if (!signned) {
+     
+      //login lock control
+      if (attempts <= 1) {
+        setAttempts(attempts-1);
+        setTimeoutLogin(TIMEOUT_LOGIN);
+        setDisabledLogin(true);
+      }else{
+        setAttempts(attempts-1);
+      }
       setErrorMessage("Erro ao efetuar o Login");
     }
-    setLoading(false);
+    setLoading(false);   
   }
 
   const validate = () => {
@@ -60,6 +79,23 @@ export default function SignIn({navigation}) {
   const handleError = (error, input) => {
     setErrors(prevState => ({...prevState, [input]: error}));
   };
+
+  //this will reset lock login
+  async function unlockLogin(){
+    setDisabledLogin(false);
+    setAttempts(LOGIN_ATTEMPTS);
+    setTimeoutLogin(TIMEOUT_LOGIN);
+  }
+
+  //this listen lock login to decrement timer
+  useEffect(() => {
+    if(disabledLogin && timeoutLogin > 0){
+      setTimeout(function(){ setTimeoutLogin(timeoutLogin-1) }, 1000);
+    }else{
+      unlockLogin();
+    }
+
+  }, [timeoutLogin, disabledLogin]);
 
   return (
     <SafeAreaView style={{backgroundColor: theme.colors.whiteBackground, flex: 1}}>
@@ -111,7 +147,21 @@ export default function SignIn({navigation}) {
           <Picker.Item label="Passo Fundo" value="passo-fundo" />
           <Picker.Item label="Realeza" value="realeza" />
         </Picker>
-        <Button title="Entrar" onPress={validate} />
+        {disabledLogin && 
+        <View style={[styles.blockedLoginMessage]}>
+          <Text style={{float:'left', width: 'auto', paddingRight: 10}}>Bloqueado por: {timeoutLogin} segundos</Text>
+        </View>  
+        }
+        {!disabledLogin && 
+        <View style={styles.blockedLoginMessage}><Text>Tentativas restantes: { attempts }</Text></View>
+        }
+       
+        <Button variant="text"
+          disabled={(inputs.iduffs == '' || inputs.password=='' || !campus || disabledLogin || loading )}
+          title="Entrar"
+          loading={loading}
+          loadingIndicatorPosition="overlay"
+          onPress={login}/>
       </Animatable.View>
       
       {errorMessage ?
@@ -147,7 +197,7 @@ const styles = StyleSheet.create({
     fontSize: 14
   },
   container: {
-    flex: 2,
+    flex: 1,
     backgroundColor: theme.colors.whiteBackground,
     alignItems: 'center',
     justifyContent: 'center',
@@ -170,9 +220,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   input: {
-    borderBottomWidth: 1,
-    height: 40,
-    marginBottom: 12
+    marginBottom: 20, 
+    paddingLeft: 0
+
   },
   message: {
     marginTop: 10,
@@ -183,5 +233,20 @@ const styles = StyleSheet.create({
   },
   senha:{
     fontSize: 20,
+  },
+  blockedLoginMessage:{
+    float: 'left',
+    position: 'relative',
+    flexDirection: 'row',
+    marginTop: 10,
+    marginBottom: 15,
+    lineHeight: 10,
+    fontSize: 20
+  },
+  countDown:{
+    float: 'left',
+    width: 20,
+    height: 15,
+    marginTop: -6
   }
 });
