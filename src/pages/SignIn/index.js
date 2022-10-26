@@ -1,13 +1,12 @@
 import React, { useState, useContext, useEffect }  from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Keyboard} from 'react-native';
-import { TextInput, Button, IconButton, Snackbar } from "@react-native-material/core";
+import { Button, Snackbar } from "@react-native-material/core";
 import { theme } from '../../styles/theme';
 import * as Animatable from 'react-native-animatable';
 import { AuthContext } from '../../context/auth';
 import {Picker} from '@react-native-picker/picker';
 import Input from '../../components/Inputs/Input';
 import Loader from '../../components/Loaders/loader';
-
 
 import {
 	LOGIN_ATTEMPTS,
@@ -29,17 +28,15 @@ export default function SignIn({navigation}) {
   const [timeoutLogin, setTimeoutLogin] = useState(TIMEOUT_LOGIN);
   const [disabledLogin, setDisabledLogin] = useState(false);
   
-  async function login({navigation}) {
+  async function login() {
     setLoading(true);
     let signned = await signIn(inputs.iduffs, inputs.password, campus);
     if (!signned) {
-     
-      //login lock control
       if (attempts <= 1) {
         setAttempts(attempts-1);
         setTimeoutLogin(TIMEOUT_LOGIN);
         setDisabledLogin(true);
-      }else{
+      } else {
         setAttempts(attempts-1);
       }
       setErrorMessage("Erro ao efetuar o Login");
@@ -47,7 +44,7 @@ export default function SignIn({navigation}) {
     setLoading(false);   
   }
 
-  const validate = () => {
+  const validate = async () => {
     Keyboard.dismiss();
     let isValid = true;
 
@@ -72,7 +69,7 @@ export default function SignIn({navigation}) {
     }
   };
 
-  const handleOnchange = (text, input) => {
+  const handleOnChange = (text, input) => {
     setInputs(prevState => ({...prevState, [input]: text}));
   };
 
@@ -117,7 +114,7 @@ export default function SignIn({navigation}) {
       
       <Animatable.View style={styles.containerForm} animation="fadeInUp" delay={400}>
         <Input
-          onChangeText={text => handleOnchange(text, 'iduffs')}
+          onChangeText={text => handleOnChange(text, 'iduffs')}
           onFocus={() => handleError(null, 'iduffs')}
           iconName="account-outline"
           label="idUFFS"
@@ -125,7 +122,7 @@ export default function SignIn({navigation}) {
           error={errors.iduffs}
         />
         <Input
-          onChangeText={text => handleOnchange(text, 'password')}
+          onChangeText={text => handleOnChange(text, 'password')}
           onFocus={() => handleError(null, 'password')}
           iconName="lock-outline"
           label="Senha"
@@ -156,12 +153,11 @@ export default function SignIn({navigation}) {
         <View style={styles.blockedLoginMessage}><Text>Tentativas restantes: { attempts }</Text></View>
         }
        
-        <Button variant="text"
-          disabled={(inputs.iduffs == '' || inputs.password=='' || !campus || disabledLogin || loading )}
-          title="Entrar"
-          loading={loading}
-          loadingIndicatorPosition="overlay"
-          onPress={login}/>
+       <Button title="Entrar"
+        disabled={(inputs.iduffs == '' || inputs.password=='' || !campus || disabledLogin || loading )}
+        loading={loading}
+        loadingIndicatorPosition="overlay"
+        onPress={validate} />
       </Animatable.View>
       
       {errorMessage ?
