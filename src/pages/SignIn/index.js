@@ -1,13 +1,12 @@
 import React, { useState, useContext, useEffect }  from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { TextInput, Button, IconButton, Snackbar } from "@react-native-material/core";
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Keyboard} from 'react-native';
+import { Button, Snackbar } from "@react-native-material/core";
 import { theme } from '../../styles/theme';
 import * as Animatable from 'react-native-animatable';
 import { AuthContext } from '../../context/auth';
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import {Picker} from '@react-native-picker/picker';
-import CountDown from 'react-native-countdown-component';
-
+import Input from '../../components/Inputs/Input';
+import Loader from '../../components/Loaders/loader';
 
 import {
 	LOGIN_ATTEMPTS,
@@ -15,35 +14,68 @@ import {
 } from '@env';
 
 export default function SignIn({navigation}) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [showPass, setShowPass] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = React.useState(false);
   const { signIn } = useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [campus, setCampus] = useState('cerro-largo');
+  const [errors, setErrors] = React.useState({});
+  const [inputs, setInputs] = React.useState({
+    iduffs: '',
+    password: ''
+  });
+
   const [attempts, setAttempts] = useState(LOGIN_ATTEMPTS);
   const [timeoutLogin, setTimeoutLogin] = useState(TIMEOUT_LOGIN);
   const [disabledLogin, setDisabledLogin] = useState(false);
   
-  async function login({navigation}) {
+  async function login() {
     setLoading(true);
-
-    let signned = await signIn(username, password, campus);
+    let signned = await signIn(inputs.iduffs, inputs.password, campus);
     if (!signned) {
-     
-      //login lock control
       if (attempts <= 1) {
         setAttempts(attempts-1);
         setTimeoutLogin(TIMEOUT_LOGIN);
         setDisabledLogin(true);
-      }else{
+      } else {
         setAttempts(attempts-1);
       }
       setErrorMessage("Erro ao efetuar o Login");
     }
     setLoading(false);   
   }
+
+  const validate = async () => {
+    Keyboard.dismiss();
+    let isValid = true;
+
+    if (!inputs.iduffs) {
+      handleError('Por favor, insira seu idUFFS', 'iduffs');
+      isValid = false;
+    } else if (inputs.iduffs.length < 5) {
+      handleError('Tamanho mínimo de idUFFS é de 5 caracteres', 'iduffs');
+      isValid = false;
+    }
+
+    if (!inputs.password) {
+      handleError('Por favor, insira sua senha', 'password');
+      isValid = false;
+    } else if (inputs.password.length < 5) {
+      handleError('Tamanho mínimo de senha é de 5 caracteres', 'password');
+      isValid = false;
+    }
+
+    if (isValid) {
+      login();
+    }
+  };
+
+  const handleOnChange = (text, input) => {
+    setInputs(prevState => ({...prevState, [input]: text}));
+  };
+
+  const handleError = (error, input) => {
+    setErrors(prevState => ({...prevState, [input]: error}));
+  };
 
   //this will reset lock login
   async function unlockLogin(){
@@ -63,7 +95,8 @@ export default function SignIn({navigation}) {
   }, [timeoutLogin, disabledLogin]);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={{backgroundColor: theme.colors.whiteBackground, flex: 1}}>
+      <Loader visible={loading} />
       <View style={styles.backContainer}>
         <TouchableOpacity
           style={ styles.button } 
@@ -74,85 +107,57 @@ export default function SignIn({navigation}) {
           </Text>
         </TouchableOpacity>
       </View>
-      <Animatable.Image 
-        animation="flipInY"
-        source={require('../../assets/practice/practice-dark.png')} 
-        style={styles.logoPractice}
-        resizeMode="contain"
-      />
 
       <Animatable.View style={styles.containerHeader} animation="fadeInLeft" delay={400}>
         <Text style={ styles.message }>Entre com o seu idUFFS e senha</Text>
       </Animatable.View>
       
       <Animatable.View style={styles.containerForm} animation="fadeInUp" delay={400}>
-        <View style={[styles.input, {borderColor: '#333', borderBottomWidth: 1}] }>
-          <Picker
-            mode={"dropdown"}
-            name='Campus'
-            selectedValue={campus}
-            onValueChange={(itemValue, itemIndex) =>
-              setCampus(itemValue)
-            }>
-            <Picker.Item label="Cerro Largo" value="cerro-largo" />
-            <Picker.Item label="Chapecó" value="chapeco" />
-            <Picker.Item label="Erechim" value="erechim" />
-            <Picker.Item label="Laranjeiras do Sul" value="laranjeiras-do-sul" />
-            <Picker.Item label="Passo Fundo" value="passo-fundo" />
-            <Picker.Item label="Realeza" value="realeza" />
-          </Picker>
-        </View>
-
-        <TextInput
-          style={styles.input}
-          name='idUFFS'
+        <Input
+          onChangeText={text => handleOnChange(text, 'iduffs')}
+          onFocus={() => handleError(null, 'iduffs')}
+          iconName="account-outline"
           label="idUFFS"
-          variant="standard"
-          value={username}
-          placeholder= "ex: alisson.peloso"
-          onChangeText={username => setUsername(username)}
-          autoComplete="username"
-          autoFocus
-          keyboardType="text"
-          editable={!loading}
+          placeholder="Digite seu idUFFS"
+          error={errors.iduffs}
         />
-
-        <TextInput
-          style={styles.input}
-          secureTextEntry={!showPass}
-          name='passIdUFFS'
+        <Input
+          onChangeText={text => handleOnChange(text, 'password')}
+          onFocus={() => handleError(null, 'password')}
+          iconName="lock-outline"
           label="Senha"
-          variant="standard"
-          onChangeText={password => setPassword(password)}
-          value={password}
-          trailing = {
-            props => (
-              <IconButton icon = {
-                props => showPass? <Icon name="eye-off" {...props}/> : <Icon name="eye" {...props}/>} 
-                onPress={() => setShowPass(!showPass)}
-              />
-            )
-          }
-          editable={!loading}
-        />
-
+          placeholder="Digite sua senha"
+          error={errors.password}
+          password
+          />
+        <Picker
+          style={{ marginBottom: 10 }}
+          mode={"dropdown"}
+          selectedValue={campus}
+          onValueChange={(itemValue, itemIndex) =>
+            setCampus(itemValue)
+        }>
+          <Picker.Item label="Cerro Largo" value="cerro-largo" />
+          <Picker.Item label="Chapecó" value="chapeco" />
+          <Picker.Item label="Erechim" value="erechim" />
+          <Picker.Item label="Laranjeiras do Sul" value="laranjeiras-do-sul" />
+          <Picker.Item label="Passo Fundo" value="passo-fundo" />
+          <Picker.Item label="Realeza" value="realeza" />
+        </Picker>
         {disabledLogin && 
         <View style={[styles.blockedLoginMessage]}>
           <Text style={{float:'left', width: 'auto', paddingRight: 10}}>Bloqueado por: {timeoutLogin} segundos</Text>
         </View>  
         }
-
         {!disabledLogin && 
         <View style={styles.blockedLoginMessage}><Text>Tentativas restantes: { attempts }</Text></View>
         }
-
-        <Button variant="text"
-          disabled={(username == '' || password=='' || !campus || disabledLogin || loading )}
-          title="Entrar"
-          loading={loading}
-          loadingIndicatorPosition="overlay"
-          onPress={login}
-          />
+       
+       <Button title="Entrar"
+        disabled={(inputs.iduffs == '' || inputs.password=='' || !campus || disabledLogin || loading )}
+        loading={loading}
+        loadingIndicatorPosition="overlay"
+        onPress={validate} />
       </Animatable.View>
       
       {errorMessage ?
@@ -162,7 +167,7 @@ export default function SignIn({navigation}) {
           style={{ position: "absolute", start: 16, end: 16, bottom: 16 }}
         /> : null
       }
-    </View>
+    </SafeAreaView>
   );
 } 
 
@@ -193,16 +198,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
   containerHeader: {
-    width: '60%',
-    flex:1,
+    width: '100%',
+    flex: 1,
+    justifyContent: 'center'
   },
+
   containerForm: {
     flex: 3,
     width: '100%',
     paddingStart:'5%',
     paddingEnd:'5%',
   },
+
   iduffs: {
     fontSize: 20,
   },
@@ -211,14 +220,11 @@ const styles = StyleSheet.create({
     paddingLeft: 0
 
   },
-  logoPractice: {
-    flex: 2,
-    width: '80%',
-  },
   message: {
     marginTop: 10,
-    fontSize: 15,
-    color: '#666666',
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#003753',
     textAlign: 'center',
   },
   senha:{

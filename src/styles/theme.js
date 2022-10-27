@@ -18,7 +18,11 @@ export const theme = {
   
       darkWhiteText: '#F4F4F5', 
       lightWhiteText: '#FFFFFF', 
-      greyText: '#A1A1AA', 
+      greyText: '#A1A1AA',
+      
+      redAlert: '#B83A41',
+      greenAlert: '#218272',
+      yellowAlert: '#FFB81C',
   
       stroke: '#52525B' 
     },
