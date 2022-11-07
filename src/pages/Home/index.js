@@ -9,10 +9,10 @@ import NewsFeed from '../NewsFeed';
 import Aura from '../Aura';
 
 const TabArr = [
-    { route: 'Service', label: 'Serviços', icon: 'home', component: Services},
-    { route: 'QrCode', label: 'Scan', icon: 'qr-code', component: QrCode},
-    { route: 'Aura', label: 'Aura', icon: 'bookmark', component: Aura},
-    { route: 'NewsFeed', label: 'Perfil', icon: 'person', component: NewsFeed},
+    { route: 'Service', label: 'Início', icon: 'home-outline', component: Services},
+    { route: 'QrCode', label: 'Scan', icon: 'qr-code-outline', component: QrCode},
+    { route: 'Aura', label: 'Aura', icon: 'bookmark-outline', component: Aura},
+    { route: 'NewsFeed', label: 'Perfil', icon: 'person-outline', component: NewsFeed},
 ];
   
 const Tab = createBottomTabNavigator();
