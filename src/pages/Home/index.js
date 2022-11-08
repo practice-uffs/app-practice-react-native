@@ -1,18 +1,18 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View} from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
 import * as Animatable from 'react-native-animatable';
 import Services from '../Services';
 import QrCode from '../QrCode';
 import NewsFeed from '../NewsFeed';
 import Aura from '../Aura';
+import Icon, { Icons } from '../../assets/icons/Icons';
 
 const TabArr = [
-    { route: 'Service', label: 'Início', icon: 'home-outline', component: Services},
-    { route: 'QrCode', label: 'Scan', icon: 'qr-code-outline', component: QrCode},
-    { route: 'Aura', label: 'Aura', icon: 'bookmark-outline', component: Aura},
-    { route: 'NewsFeed', label: 'Perfil', icon: 'person-outline', component: NewsFeed},
+    { route: 'Service', type: Icons.Feather, label: 'Início', icon: 'home', component: Services},
+    { route: 'QrCode', type: Icons.Ionicons, label: 'Scan', icon: 'qr-code-outline', component: QrCode},
+    { route: 'Aura', type: Icons.Ionicons, label: 'Aura', icon: 'bookmark-outline', component: Aura},
+    { route: 'NewsFeed', type: Icons.Feather, label: 'Perfil', icon: 'user', component: NewsFeed},
 ];
   
 const Tab = createBottomTabNavigator();
@@ -21,8 +21,8 @@ const TabButton = (props) => {
     const { item, onPress, accessibilityState } = props;
     const focused = accessibilityState.selected;
     const viewRef = useRef(null);
-    const textViewRef = useRef(null);
-  
+    const textViewRef = useRef(null); 
+
     return (
         <TouchableOpacity
             onPress={onPress}
@@ -31,13 +31,13 @@ const TabButton = (props) => {
             <View>
                 <Animatable.View
                     ref={viewRef}
-                    style={[StyleSheet.absoluteFillObject, { backgroundColor: '#000', borderRadius: 16 }]} />
+                    style={[StyleSheet.absoluteFillObject, { backgroundColor: '#fff', borderRadius: 50 }]} />
                 <View style={[styles.btn, { backgroundColor: focused ? '#003753' : '#EBEBEB' }]}>
-                    <Ionicons name={item.icon} color={focused ? '#FFFFFF' : '#003753'} />
+                    <Icon type={item.type} name={item.icon} color={focused ? '#FFFFFF' : '#003753'} />
                     <Animatable.View
                         ref={textViewRef}>
                         {focused && <Text style={{
-                        color: '#FFFFFF', paddingHorizontal: 8
+                        color: '#FFFFFF', paddingHorizontal: 8, fontWeight: 'bold',
                         }}>{item.label}</Text>}
                     </Animatable.View>
                 </View>
@@ -80,11 +80,14 @@ export default function TabNavigator() {
     container: {
       justifyContent: 'center',
       alignItems: 'center',
+      alignContent: 'center',
+      padding: 0,
+      flexDirection: 'row',
     },
     btn: {
       flexDirection: 'row',
       alignItems: 'center',
       padding: 8,
-      borderRadius: 16,
+      borderRadius: 50,
     }
   })
