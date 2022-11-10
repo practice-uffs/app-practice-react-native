@@ -7,7 +7,7 @@ export const Icons = {
     Feather,
 }
 
-const Icon = ({ type, name, color, size = 24, style }) => {
+const Icon = ({ type, name, color, size, style }) => {
     const fontSize = 24;
     const Tag = type;
     return (
