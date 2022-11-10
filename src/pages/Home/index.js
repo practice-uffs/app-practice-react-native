@@ -83,11 +83,13 @@ export default function TabNavigator() {
       alignContent: 'center',
       padding: 0,
       flexDirection: 'row',
+      height: 60
     },
     btn: {
       flexDirection: 'row',
       alignItems: 'center',
       padding: 8,
-      borderRadius: 50,
+      borderRadius: 40/2,
+      height: 40
     }
   })
