@@ -7,6 +7,7 @@ import { AuthContext } from '../../context/auth';
 import {Picker} from '@react-native-picker/picker';
 import Input from '../../components/Inputs/Input';
 import Loader from '../../components/Loaders/loader';
+import CampusPicker from '../../components/CampusPicker/index';
 
 import {
 	LOGIN_ATTEMPTS,
@@ -130,20 +131,7 @@ export default function SignIn({navigation}) {
           error={errors.password}
           password
           />
-        <Picker
-          style={{ marginBottom: 10 }}
-          mode={"dropdown"}
-          selectedValue={campus}
-          onValueChange={(itemValue, itemIndex) =>
-            setCampus(itemValue)
-        }>
-          <Picker.Item label="Cerro Largo" value="cerro-largo" />
-          <Picker.Item label="Chapecó" value="chapeco" />
-          <Picker.Item label="Erechim" value="erechim" />
-          <Picker.Item label="Laranjeiras do Sul" value="laranjeiras-do-sul" />
-          <Picker.Item label="Passo Fundo" value="passo-fundo" />
-          <Picker.Item label="Realeza" value="realeza" />
-        </Picker>
+        <CampusPicker />
         {disabledLogin && 
         <View style={[styles.blockedLoginMessage]}>
           <Text style={{float:'left', width: 'auto', paddingRight: 10}}>Bloqueado por: {timeoutLogin} segundos</Text>
