@@ -30,7 +30,7 @@ export default function SignIn({navigation}) {
   
   async function login() {
     setLoading(true);
-    let signned = await signIn(inputs.iduffs, inputs.password, user.campus);
+    let signned = await signIn(inputs.iduffs, inputs.password, campus);
     if (!signned) {
       if (attempts <= 1) {
         setAttempts(attempts-1);
@@ -65,6 +65,7 @@ export default function SignIn({navigation}) {
     }
 
     if (isValid) {
+      console.log(campus);
       login();
     }
   };
