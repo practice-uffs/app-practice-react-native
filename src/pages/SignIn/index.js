@@ -149,7 +149,7 @@ export default function SignIn({navigation}) {
         }
        
        <Button title="Entrar"
-        disabled={(inputs.iduffs == '' || inputs.password=='' || disabledLogin || loading )}
+        disabled={(inputs.iduffs == '' || inputs.password=='' || !campus || disabledLogin || loading )}
         loading={loading}
         loadingIndicatorPosition="overlay"
         onPress={validate} />
