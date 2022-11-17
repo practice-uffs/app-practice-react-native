@@ -16,6 +16,7 @@ API.req = axios.create({
 API.requestLogin = async function (username, password, campus) {
 	return await this.req.post(this.url + "auth", {
 		"user": username,
+		"campus": campus,
 		"password": password,
 		"app_id": "4"
 	}).then((res) => {

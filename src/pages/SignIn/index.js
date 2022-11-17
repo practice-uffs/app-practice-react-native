@@ -4,7 +4,6 @@ import { Button, Snackbar } from "@react-native-material/core";
 import { theme } from '../../styles/theme';
 import * as Animatable from 'react-native-animatable';
 import { AuthContext } from '../../context/auth';
-import {Picker} from '@react-native-picker/picker';
 import Input from '../../components/Inputs/Input';
 import Loader from '../../components/Loaders/loader';
 import CampusPicker from '../../components/CampusPicker/index';
@@ -17,8 +16,9 @@ import {
 export default function SignIn({navigation}) {
   const [loading, setLoading] = React.useState(false);
   const { signIn } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+  const [ campus, setCampus ] = useState('cerro-largo'); 
   const [errorMessage, setErrorMessage] = useState(null);
-  const [campus, setCampus] = useState('cerro-largo');
   const [errors, setErrors] = React.useState({});
   const [inputs, setInputs] = React.useState({
     iduffs: '',
@@ -31,7 +31,7 @@ export default function SignIn({navigation}) {
   
   async function login() {
     setLoading(true);
-    let signned = await signIn(inputs.iduffs, inputs.password, campus);
+    let signned = await signIn(inputs.iduffs, inputs.password, user.campus);
     if (!signned) {
       if (attempts <= 1) {
         setAttempts(attempts-1);
@@ -66,6 +66,7 @@ export default function SignIn({navigation}) {
     }
 
     if (isValid) {
+      console.log(campus);
       login();
     }
   };
@@ -131,7 +132,13 @@ export default function SignIn({navigation}) {
           error={errors.password}
           password
           />
-        <CampusPicker />
+        <CampusPicker
+          style={{ marginBottom: 10 }}
+          mode={"dropdown"}
+          selectedValue={campus}
+          onValueChange={(itemValue, itemIndex) =>
+            setCampus(itemValue)}
+        />
         {disabledLogin && 
         <View style={[styles.blockedLoginMessage]}>
           <Text style={{float:'left', width: 'auto', paddingRight: 10}}>Bloqueado por: {timeoutLogin} segundos</Text>
@@ -142,7 +149,7 @@ export default function SignIn({navigation}) {
         }
        
        <Button title="Entrar"
-        disabled={(inputs.iduffs == '' || inputs.password=='' || !campus || disabledLogin || loading )}
+        disabled={(inputs.iduffs == '' || inputs.password=='' || disabledLogin || loading )}
         loading={loading}
         loadingIndicatorPosition="overlay"
         onPress={validate} />

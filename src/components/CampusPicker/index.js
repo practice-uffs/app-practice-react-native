@@ -1,23 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {Picker} from '@react-native-picker/picker';
 
 
-export default function CampusPicker() {
-    const [campus, setCampus] = useState('cerro-largo');
+const CampusPicker = ({
+    campus,
+    ...props
+  }) => {
     return (
     <Picker
-    style={{ marginBottom: 10 }}
-    mode={"dropdown"}
-    selectedValue={campus}
-    onValueChange={(itemValue, itemIndex) =>
-    setCampus(itemValue)
-    }>
-    <Picker.Item label="Cerro Largo" value="cerro-largo" />
-    <Picker.Item label="Chapecó" value="chapeco" />
-    <Picker.Item label="Erechim" value="erechim" />
-    <Picker.Item label="Laranjeiras do Sul" value="laranjeiras-do-sul" />
-    <Picker.Item label="Passo Fundo" value="passo-fundo" />
-    <Picker.Item label="Realeza" value="realeza" />
+        style={{ marginBottom: 10 }}
+        mode={"dropdown"}
+        selectedValue={campus}
+        {...props}
+    >
+          <Picker.Item key={1} label="Cerro Largo" value="cerro-largo" />
+          <Picker.Item key={2} label="Chapecó" value="chapeco" />
+          <Picker.Item key={3} label="Erechim" value="erechim" />
+          <Picker.Item key={4} label="Laranjeiras do Sul" value="laranjeiras-do-sul" />
+          <Picker.Item key={5} label="Passo Fundo" value="passo-fundo" />
+          <Picker.Item key={6} label="Realeza" value="realeza" />
     </Picker>
     )
 };
+
+export default CampusPicker;
