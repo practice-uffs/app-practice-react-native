@@ -66,7 +66,6 @@ export default function SignIn({navigation}) {
     }
 
     if (isValid) {
-      console.log(campus);
       login();
     }
   };
