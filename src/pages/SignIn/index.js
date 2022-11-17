@@ -16,7 +16,6 @@ import {
 export default function SignIn({navigation}) {
   const [loading, setLoading] = React.useState(false);
   const { signIn } = useContext(AuthContext);
-  const { user } = useContext(AuthContext);
   const [ campus, setCampus ] = useState('cerro-largo'); 
   const [errorMessage, setErrorMessage] = useState(null);
   const [errors, setErrors] = React.useState({});
