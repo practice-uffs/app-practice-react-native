@@ -4,7 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import * as Animatable from 'react-native-animatable';
 import Services from '../Services';
 import QrCode from '../QrCode';
-import NewsFeed from '../NewsFeed';
+import Perfil from '../Perfil';
 import Aura from '../Aura';
 import Icon, { Icons } from '../../assets/icons/Icons';
 
@@ -12,7 +12,7 @@ const TabArr = [
     { route: 'Service', type: Icons.Feather, label: 'Início', icon: 'home', component: Services},
     { route: 'QrCode', type: Icons.Ionicons, label: 'Scan', icon: 'qr-code-outline', component: QrCode},
     { route: 'Aura', type: Icons.Ionicons, label: 'Aura', icon: 'bookmark-outline', component: Aura},
-    { route: 'NewsFeed', type: Icons.Feather, label: 'Perfil', icon: 'user', component: NewsFeed},
+    { route: 'Perfil', type: Icons.Feather, label: 'Perfil', icon: 'user', component: Perfil},
 ];
   
 const Tab = createBottomTabNavigator();

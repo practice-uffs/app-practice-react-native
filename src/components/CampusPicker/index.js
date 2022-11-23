@@ -1,25 +1,37 @@
-import React from 'react';
-import {Picker} from '@react-native-picker/picker';
-
+import React, { useContext } from 'react';
+import { AuthContext } from '../../context/auth';
+import { SelectList } from 'react-native-dropdown-select-list';
 
 const CampusPicker = ({
-    campus,
+    setSelected,
+    dropdownStylesProps,
+    dropdownItemStylesProps,
+    dropdownTextStylesProps,
     ...props
   }) => {
+
+    const { user } = useContext(AuthContext);
+
+    const campus = [
+        {key:'cerro-largo', value:'Cerro Largo'},
+        {key:'chapeco', value:'Chapecó'},
+        {key:'erechim', value:'Erechim'},
+        {key:'laranjeiras-do-sul', value:'Laranjeiras do Sul'},
+        {key:'passo-fundo', value:'Passo Fundo'},
+        {key:'realeza', value:'Realeza'},
+    ]
+
     return (
-    <Picker
-        style={{ marginBottom: 10 }}
-        mode={"dropdown"}
-        selectedValue={campus}
-        {...props}
-    >
-          <Picker.Item key={1} label="Cerro Largo" value="cerro-largo" />
-          <Picker.Item key={2} label="Chapecó" value="chapeco" />
-          <Picker.Item key={3} label="Erechim" value="erechim" />
-          <Picker.Item key={4} label="Laranjeiras do Sul" value="laranjeiras-do-sul" />
-          <Picker.Item key={5} label="Passo Fundo" value="passo-fundo" />
-          <Picker.Item key={6} label="Realeza" value="realeza" />
-    </Picker>
+    <SelectList 
+        data={campus}
+        setSelected={(val) => setSelected(val)}
+        save="key"
+        placeholder={user.campus ?? 'Campus'}
+        search = {false}
+        dropdownStyles= {dropdownStylesProps}
+        dropdownItemStyles = {dropdownItemStylesProps}
+        dropdownTextStyles = {dropdownTextStylesProps}
+    />
     )
 };
 
