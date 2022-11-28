@@ -15,8 +15,8 @@ import {
 
 export default function SignIn({navigation}) {
   const [loading, setLoading] = React.useState(false);
+  const [selected, setSelected] = React.useState("");
   const { signIn } = useContext(AuthContext);
-  const [ campus, setCampus ] = useState('cerro-largo'); 
   const [errorMessage, setErrorMessage] = useState(null);
   const [errors, setErrors] = React.useState({});
   const [inputs, setInputs] = React.useState({
@@ -30,7 +30,7 @@ export default function SignIn({navigation}) {
   
   async function login() {
     setLoading(true);
-    let signned = await signIn(inputs.iduffs, inputs.password, campus);
+    let signned = await signIn(inputs.iduffs, inputs.password, selected);
     if (!signned) {
       if (attempts <= 1) {
         setAttempts(attempts-1);
@@ -131,11 +131,7 @@ export default function SignIn({navigation}) {
           password
           />
         <CampusPicker
-          style={{ marginBottom: 10 }}
-          mode={"dropdown"}
-          selectedValue={campus}
-          onValueChange={(itemValue, itemIndex) =>
-            setCampus(itemValue)}
+          setSelected={setSelected}
         />
         {disabledLogin && 
         <View style={[styles.blockedLoginMessage]}>
@@ -147,7 +143,7 @@ export default function SignIn({navigation}) {
         }
        
        <Button title="Entrar"
-        disabled={(inputs.iduffs == '' || inputs.password=='' || !campus || disabledLogin || loading )}
+        disabled={(inputs.iduffs == '' || inputs.password=='' || !selected || disabledLogin || loading )}
         loading={loading}
         loadingIndicatorPosition="overlay"
         onPress={validate} />
@@ -170,7 +166,8 @@ const styles = StyleSheet.create({
   },
   button:{
     width: '20%',
-    marginLeft: 20
+    marginLeft: 20,
+    zIndex: 1
   },
   buttonText:{
     marginTop: 25,
@@ -203,6 +200,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingStart:'5%',
     paddingEnd:'5%',
+    zIndex: 0,
   },
 
   iduffs: {
@@ -230,7 +228,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 15,
     lineHeight: 10,
-    fontSize: 20
+    fontSize: 20,
+    zIndex: 1
   },
   countDown:{
     float: 'left',
