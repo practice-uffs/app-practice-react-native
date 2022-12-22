@@ -7249,6 +7249,11 @@
   dependencies:
     "dotenv" "^10.0.0"
 
+"react-native-dropdown-select-list@^2.0.2":
+  "integrity" "sha512-dxbhsO6DHxN5Ex5koVIAWO5E9R6ENNzbVjSoBVi8dcQkd1ubD31eCmdJXd4+VzEpXZ2em61kzILqyksRkLtS5w=="
+  "resolved" "https://registry.npmjs.org/react-native-dropdown-select-list/-/react-native-dropdown-select-list-2.0.2.tgz"
+  "version" "2.0.2"
+
 "react-native-eventemitter@^0.0.1":
   "integrity" "sha512-DMUkXNWdrnf3GDcXovcY4Z5XgkoZCCLEde6//3K6E28npM8FsUFrb9a0oK2O6+y5wNgBpTxlIgHkLUw5tdwxSw=="
   "resolved" "https://registry.npmjs.org/react-native-eventemitter/-/react-native-eventemitter-0.0.1.tgz"

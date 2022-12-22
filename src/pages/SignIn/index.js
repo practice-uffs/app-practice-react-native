@@ -4,9 +4,9 @@ import { Button, Snackbar } from "@react-native-material/core";
 import { theme } from '../../styles/theme';
 import * as Animatable from 'react-native-animatable';
 import { AuthContext } from '../../context/auth';
-import {Picker} from '@react-native-picker/picker';
 import Input from '../../components/Inputs/Input';
 import Loader from '../../components/Loaders/loader';
+import CampusPicker from '../../components/CampusPicker/index';
 
 import {
 	LOGIN_ATTEMPTS,
@@ -15,9 +15,9 @@ import {
 
 export default function SignIn({navigation}) {
   const [loading, setLoading] = React.useState(false);
+  const [campus, setCampus] = React.useState("");
   const { signIn } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [campus, setCampus] = useState('cerro-largo');
   const [errors, setErrors] = React.useState({});
   const [inputs, setInputs] = React.useState({
     iduffs: '',
@@ -30,7 +30,7 @@ export default function SignIn({navigation}) {
   
   async function login() {
     setLoading(true);
-    let signned = await signIn(inputs.iduffs, inputs.password, campus);
+    let signned = await signIn(inputs.iduffs, inputs.password, selected);
     if (!signned) {
       if (attempts <= 1) {
         setAttempts(attempts-1);
@@ -130,20 +130,9 @@ export default function SignIn({navigation}) {
           error={errors.password}
           password
           />
-        <Picker
-          style={{ marginBottom: 10 }}
-          mode={"dropdown"}
-          selectedValue={campus}
-          onValueChange={(itemValue, itemIndex) =>
-            setCampus(itemValue)
-        }>
-          <Picker.Item label="Cerro Largo" value="cerro-largo" />
-          <Picker.Item label="Chapecó" value="chapeco" />
-          <Picker.Item label="Erechim" value="erechim" />
-          <Picker.Item label="Laranjeiras do Sul" value="laranjeiras-do-sul" />
-          <Picker.Item label="Passo Fundo" value="passo-fundo" />
-          <Picker.Item label="Realeza" value="realeza" />
-        </Picker>
+        <CampusPicker
+          setSelected={setCampus}
+        />
         {disabledLogin && 
         <View style={[styles.blockedLoginMessage]}>
           <Text style={{float:'left', width: 'auto', paddingRight: 10}}>Bloqueado por: {timeoutLogin} segundos</Text>
@@ -177,7 +166,8 @@ const styles = StyleSheet.create({
   },
   button:{
     width: '20%',
-    marginLeft: 20
+    marginLeft: 20,
+    zIndex: 1
   },
   buttonText:{
     marginTop: 25,
@@ -210,6 +200,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingStart:'5%',
     paddingEnd:'5%',
+    zIndex: 0,
   },
 
   iduffs: {
@@ -237,7 +228,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 15,
     lineHeight: 10,
-    fontSize: 20
+    fontSize: 20,
+    zIndex: 1
   },
   countDown:{
     float: 'left',
