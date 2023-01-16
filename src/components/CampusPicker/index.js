@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../context/auth';
 import { SelectList } from 'react-native-dropdown-select-list';
+import { theme } from '../../styles/theme';
 
 const CampusPicker = ({
     setSelected,
-    dropdownStylesProps,
-    dropdownItemStylesProps,
-    dropdownTextStylesProps,
+    width,
+    fontWeight,
+    inputStyles,
     ...props
   }) => {
 
@@ -28,9 +29,10 @@ const CampusPicker = ({
         save="key"
         placeholder={user.campus ?? 'Campus'}
         search = {false}
-        dropdownStyles= {dropdownStylesProps}
-        dropdownItemStyles = {dropdownItemStylesProps}
-        dropdownTextStyles = {dropdownTextStylesProps}
+        dropdownStyles= {{backgroundColor: '#fff', width: width, borderColor: theme.colors.darkBlue}}
+        dropdownTextStyles={{ color: theme.colors.darkBlue }}
+        inputStyles={{color: theme.colors.darkBlue, fontWeight: fontWeight}}
+        boxStyles={{ borderColor: theme.colors.darkBlue, borderWidth: 1.5 }}
     />
     )
 };

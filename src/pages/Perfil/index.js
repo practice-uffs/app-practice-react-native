@@ -6,11 +6,7 @@ export default function Perfil({navigation}) {
     return (
         <SafeAreaView>
             <ScrollView>
-            <ImageBackground source={require('../../assets/background/infoperfil_bg.png')} style={{ height: 'auto' }}>
-                <View style={{ position: 'relative', top: 120 }}>
-                    <InfoPerfil />
-                </View>
-            </ImageBackground>
+                <InfoPerfil />
             </ScrollView>
         </SafeAreaView>
     );

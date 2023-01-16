@@ -15,7 +15,7 @@ import {
 
 export default function SignIn({navigation}) {
   const [loading, setLoading] = React.useState(false);
-  const [selected, setSelected] = React.useState("");
+  const [campus, setCampus] = React.useState("");
   const { signIn } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState(null);
   const [errors, setErrors] = React.useState({});
@@ -30,7 +30,7 @@ export default function SignIn({navigation}) {
   
   async function login() {
     setLoading(true);
-    let signned = await signIn(inputs.iduffs, inputs.password, selected);
+    let signned = await signIn(inputs.iduffs, inputs.password, campus);
     if (!signned) {
       if (attempts <= 1) {
         setAttempts(attempts-1);
@@ -65,7 +65,6 @@ export default function SignIn({navigation}) {
     }
 
     if (isValid) {
-      console.log(selected);
       login();
     }
   };
@@ -132,7 +131,7 @@ export default function SignIn({navigation}) {
           password
           />
         <CampusPicker
-          setSelected={setSelected}
+          setSelected={setCampus}
         />
         {disabledLogin && 
         <View style={[styles.blockedLoginMessage]}>
@@ -144,7 +143,7 @@ export default function SignIn({navigation}) {
         }
        
        <Button title="Entrar"
-        disabled={(inputs.iduffs == '' || inputs.password=='' || !selected || disabledLogin || loading )}
+        disabled={(inputs.iduffs == '' || inputs.password=='' || !campus || disabledLogin || loading )}
         loading={loading}
         loadingIndicatorPosition="overlay"
         onPress={validate} />

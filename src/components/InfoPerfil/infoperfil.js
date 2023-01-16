@@ -9,43 +9,38 @@ import CampusPicker from '../CampusPicker/index';
 const InfoPerfil = ({
     // parametros
 }) => {
-    const [selected, setSelected] = React.useState("");
+    const [campus, setCampus] = React.useState("");
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.card}>
                 <View style={styles.person}>
                     <View>
-                        <View style={{ backgroundColor: '#FFD7BD', borderRadius: 100, width: 130, height: 130, alignItems: 'center', justifyContent: 'center' }}>
+                        <View style={styles.userIconContainer} >
                             <Icon type={Icons.Feather} name={'user'} color={theme.colors.darkOrange} size={75}/>
                         </View>
                         <View style={{ position: 'absolute', top: 90, left: 100 }}>
-                            <TouchableOpacity activeOpacity={1.0} style={{ backgroundColor: '#FFE9BD', borderRadius: 30/2, width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                            <TouchableOpacity activeOpacity={1.0} style={styles.options}>
                                 <Icon type={Icons.Feather} name={'more-vertical'} color={theme.colors.darkOrange} size={15}/>
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <Text style={{ color: theme.colors.darkOrange, fontSize: 22, fontWeight: 'bold', marginTop: 5, }}>Fulano de Tal</Text>
-                    <Text style={{ color: theme.colors.darkBlue, fontSize: 16, fontWeight: '300' }}>2211100065</Text>
+                    <Text style={ styles.userName }>Fulano de Tal</Text>
+                    <Text style={ styles.userIDUFFS }>2211100065</Text>
                 </View>
                 <View style={styles.containerTwo}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
-                        <Icon type={Icons.Feather} name={'map-pin'} color={theme.colors.darkBlue} />
-                        <View>
-                            <CampusPicker
-                                setSelected={setSelected}
-                                dropdownStylesProps = {{ marginTop: 50, elevation: 2, zIndex: 2, position: 'absolute' }}
-                                dropdownItemStylesProps = {{ zIndex: 2, elevation: 2 }}
-                                dropdownTextStylesProps = {{ zIndex: 2, elevation: 2 }}
-                            />
-                        </View>
-                    </View>
+                    <Icon type={Icons.Feather} name={'map-pin'} color={theme.colors.darkBlue} style={{ top: 10 }} />
+                    <CampusPicker
+                        setSelected={setCampus}
+                        width={120}
+                        fontWeight={'600'}
+                    />
                     <View style={styles.goingOn}>
-                        <Text style={{ color: theme.colors.darkBlue, fontSize: 14, fontWeight: 'bold' }}>O que está acontecendo?</Text>
+                        <Text style={{ color: theme.colors.darkBlue, fontSize: 14, fontWeight: 'bold', textAlign: 'center' }}>O que está acontecendo?</Text>
                         <Text style={{ color: theme.colors.darkBlue, fontSize: 14, fontWeight: '300', marginTop: 5}}>Matemática C - 309B</Text>
                     </View>
                 </View>
-                <View style={{ paddingRight: 40, paddingLeft: 40}}>
+                <View style={{ paddingRight: 40, paddingLeft: 40, zIndex: 0, marginTop: 50}}>
                     <AcademicCalendar />
                 </View>
             </View>
@@ -57,7 +52,8 @@ const styles = StyleSheet.create({
     goingOn: {
         flexDirection: 'column',
         alignItems: 'center',
-        zIndex: 0
+        zIndex: 0,
+        width: 150
     },
     container: {
         alignItems: 'center',
@@ -66,8 +62,11 @@ const styles = StyleSheet.create({
     containerTwo: {
         justifyContent: 'space-around',
         flexDirection: 'row',
-        alignItems: 'center',
-        top: -30
+        alignItems: 'top',
+        top: 150,
+        position: 'absolute',
+        zIndex: 5,
+        width: 350,
     },
     person: {
         alignItems: 'center',
@@ -80,6 +79,28 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         paddingBottom: 60
     },
+    options: {
+        backgroundColor: '#FFE9BD',
+        borderRadius: 30/2,
+        width: 30,
+        height: 30,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    userIconContainer: {
+        backgroundColor: '#FFD7BD',
+        borderRadius: 100,
+        width: 130,
+        height: 130,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    userName: {
+        color: theme.colors.darkOrange, fontSize: 22, fontWeight: 'bold', marginTop: 5,
+    },
+    userIDUFFS: {
+        color: theme.colors.darkBlue, fontSize: 16, fontWeight: '300'
+    }
 });
 
 export default InfoPerfil;
