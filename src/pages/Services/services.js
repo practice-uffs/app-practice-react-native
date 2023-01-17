@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import { Text, Block, Button, theme } from 'galio-framework'
 import { ScrollView } from 'react-native-gesture-handler';
 import { RefreshControl, Pressable, View, Image} from 'react-native';
-import { Box } from "@react-native-material/core";
+import { Box, ListItem } from "@react-native-material/core";
 import API from '../../services/api';
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import {  ActivityIndicator } from "@react-native-material/core";
@@ -70,26 +70,21 @@ export default function ServicesTabs() {
       let elements = [];
       show.forEach((element, index) => {
         elements.push(
-          <ListItem key={index} containerStyle={{ backgroundColor: 'transparent', marginBottom: 10 }}>
-            <ListItem.Content flexDirection={'row'} justifyContent={'space-between'}>
-              <View style={{ flexDirection: 'column' }}>
-                <ListItem.Title>{element.title.length <= 30? element.title : element.title.substring(0,30)+"..."}</ListItem.Title>
-                <ListItem.Subtitle>{element.description.length <= 50 ? element.description : element.description.substring(0, 50)  + "..."}</ListItem.Subtitle>
-                <Text style={{ marginTop: 10 }}>{element.created_at}</Text>
-              </View>
-              <Icon name="chevron-right" style={{ alignSelf: 'center'}}/>
-            </ListItem.Content>
-          </ListItem>
+          <ListItem key={index}
+            title={element.title.length <= 30? element.title : element.title.substring(0,30)+"..."}
+            trailing={props => <Icon name="chevron-right" {...props} />}
+            secondaryText={element.description.length <= 50 ? element.description : element.description.substring(0, 50)  + "..."}
+            meta={element.created_at}
+          />
         )
       })
       return elements;
     } else {
       return (
-        <ListItem key={0} containerStyle={{ backgroundColor: 'transparent' }}>
-            <ListItem.Content flexDirection={'row'} justifyContent={'center'}>
-                <ListItem.Title>Nada por aqui ainda 😁</ListItem.Title>
-            </ListItem.Content>
-          </ListItem>
+        <ListItem key={0}
+          disabled
+          title="Nada por aqui ainda 😁"
+        />
       );
     }
   }
@@ -127,7 +122,6 @@ export default function ServicesTabs() {
                 onRefresh={init}
               />
             }
-            style={{ backgroundColor: '#fff', marginTop: 20, marginBottom:40, borderRadius: 10, marginLeft: 15, marginRight: 15}}
           >
             <ServiceList/>
           </ScrollView>
