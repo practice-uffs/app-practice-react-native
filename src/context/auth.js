@@ -7,6 +7,7 @@ export const AuthContext = createContext({});
 
 function AuthProvider({ children }) {
     const [user, setUser] = useState({});
+    const [campus, setCampus] = useState({});
     const [token, setToken] = useState('');
     const [isLogged, setIsLogged] = useState(false);
     const navigation = useNavigation();
@@ -36,6 +37,7 @@ function AuthProvider({ children }) {
         data = await API.requestLogin(user, password, campus);
         if (data) {
             setUser(data.user);
+            setCampus(data.campus);
             setToken(data.passport);
             setIsLogged(true);
 
@@ -56,6 +58,7 @@ function AuthProvider({ children }) {
             {
                 signIn,
                 user,
+                campus,
                 isLogged,
                 token,
                 checkStorage,
