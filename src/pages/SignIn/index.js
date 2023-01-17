@@ -30,7 +30,7 @@ export default function SignIn({navigation}) {
   
   async function login() {
     setLoading(true);
-    let signned = await signIn(inputs.iduffs, inputs.password, campus);
+    let signned = await signIn(inputs.iduffs, inputs.password, selected);
     if (!signned) {
       if (attempts <= 1) {
         setAttempts(attempts-1);
