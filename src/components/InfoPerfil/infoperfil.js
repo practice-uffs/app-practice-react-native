@@ -33,9 +33,9 @@ const InfoPerfil = ({
                         <Icon type={Icons.Feather} name={'map-pin'} color={theme.colors.darkBlue} style={{ top: 10, right: 10 }} />
                         <CampusPicker
                             setSelected={setCampus}
-                            dropdownWidth={120}
+                            dropdownWidth={175}
                             fontWeight={'600'}
-                            width={140}
+                            width={175}
                         />
                     </View>
                     <View style={styles.goingOn}>
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         zIndex: 5,
         flexDirection: 'row',
-        left: 95.5,
+        left: 78,
         top: -10
     },
 });
