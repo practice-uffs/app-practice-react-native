@@ -30,7 +30,7 @@ const InfoPerfil = ({
                 </View>
                 <View style={styles.containerThree}>
                     <View style={styles.campusContainer}>
-                        <Icon type={Icons.Feather} name={'map-pin'} color={theme.colors.darkBlue} style={{ top: 10, right: 10 }} />
+                        <Icon type={Icons.Feather} name={'map-pin'} color={theme.colors.darkBlue} style={{ top: 10, paddingRight: 10 }} />
                         <CampusPicker
                             setSelected={setCampus}
                             dropdownWidth={175}
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         zIndex: 5,
         flexDirection: 'row',
-        left: 78,
+        left: 70,
         top: -10
     },
 });
