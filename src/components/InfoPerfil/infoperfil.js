@@ -28,20 +28,23 @@ const InfoPerfil = ({
                     <Text style={ styles.userName }>Fulano de Tal</Text>
                     <Text style={ styles.userIDUFFS }>2211100065</Text>
                 </View>
-                <View style={styles.containerTwo}>
-                    <Icon type={Icons.Feather} name={'map-pin'} color={theme.colors.darkBlue} style={{ top: 10 }} />
-                    <CampusPicker
-                        setSelected={setCampus}
-                        width={120}
-                        fontWeight={'600'}
-                    />
+                <View style={styles.containerThree}>
+                    <View style={styles.campusContainer}>
+                        <Icon type={Icons.Feather} name={'map-pin'} color={theme.colors.darkBlue} style={{ top: 10, right: 10 }} />
+                        <CampusPicker
+                            setSelected={setCampus}
+                            dropdownWidth={120}
+                            fontWeight={'600'}
+                            width={140}
+                        />
+                    </View>
                     <View style={styles.goingOn}>
                         <Text style={{ color: theme.colors.darkBlue, fontSize: 14, fontWeight: 'bold', textAlign: 'center' }}>O que está acontecendo?</Text>
                         <Text style={{ color: theme.colors.darkBlue, fontSize: 14, fontWeight: '300', marginTop: 5}}>Matemática C - 309B</Text>
                     </View>
-                </View>
-                <View style={{ paddingRight: 40, paddingLeft: 40, zIndex: 0, marginTop: 50}}>
-                    <AcademicCalendar />
+                    <View style={{ paddingRight: 40, paddingLeft: 40, }}>
+                        <AcademicCalendar />
+                    </View>
                 </View>
             </View>
         </SafeAreaView>
@@ -52,26 +55,23 @@ const styles = StyleSheet.create({
     goingOn: {
         flexDirection: 'column',
         alignItems: 'center',
-        zIndex: 0,
-        width: 150
+        justifyContent: 'flex-end',
+        height: 150,
+        backgroundColor: '#F9F9F9',
+        paddingBottom: 25,
+        top: -35
     },
     container: {
         alignItems: 'center',
         justifyContent: 'space-between'
     },
-    containerTwo: {
-        justifyContent: 'space-around',
-        flexDirection: 'row',
-        alignItems: 'top',
-        top: 150,
-        position: 'absolute',
-        zIndex: 5,
-        width: 350,
+    containerThree: {
+        flexDirection: 'column'
     },
     person: {
         alignItems: 'center',
         justifyContent: 'center',
-        top: -65,
+        top: -65
     },
     card: {
         width: 350,
@@ -100,7 +100,14 @@ const styles = StyleSheet.create({
     },
     userIDUFFS: {
         color: theme.colors.darkBlue, fontSize: 16, fontWeight: '300'
-    }
+    },
+    campusContainer: {
+        position: 'absolute',
+        zIndex: 5,
+        flexDirection: 'row',
+        left: 95.5,
+        top: -10
+    },
 });
 
 export default InfoPerfil;
