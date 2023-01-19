@@ -30,14 +30,15 @@ const InfoPerfil = ({
                 </View>
                 <View style={styles.containerThree}>
                     <View style={styles.campusContainer}>
-                        <Icon type={Icons.Feather} name={'map-pin'} color={theme.colors.darkBlue} style={{ top: 10, paddingRight: 10 }} />
+                        <Icon type={Icons.Feather} name={'map-pin'} color={theme.colors.darkBlue} style={{ top: 10, marginLeft: 15 }} />
                         <CampusPicker
                             setSelected={setCampus}
-                            dropdownWidth={175}
+                            dropdownWidth={152}
                             fontWeight={'600'}
-                            width={175}
+                            width={170}
                         />
                     </View>
+                    <View style={styles.line}></View>
                     <View style={styles.goingOn}>
                         <Text style={{ color: theme.colors.darkBlue, fontSize: 14, fontWeight: 'bold', textAlign: 'center' }}>O que está acontecendo?</Text>
                         <Text style={{ color: theme.colors.darkBlue, fontSize: 14, fontWeight: '300', marginTop: 5}}>Matemática C - 309B</Text>
@@ -108,6 +109,10 @@ const styles = StyleSheet.create({
         left: 70,
         top: -10
     },
+    line: {
+        backgroundColor: theme.colors.darkBlue, height: 1.5, width: 172, zIndex: 1,
+        position: 'relative', top: 39, left: 88
+    }
 });
 
 export default InfoPerfil;
