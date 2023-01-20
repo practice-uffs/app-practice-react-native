@@ -1,12 +1,14 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../context/auth';
 import { SelectList } from 'react-native-dropdown-select-list';
+import { theme } from '../../styles/theme';
 
 const CampusPicker = ({
     setSelected,
-    dropdownStylesProps,
-    dropdownItemStylesProps,
-    dropdownTextStylesProps,
+    dropdownWidth,
+    fontWeight,
+    inputStyles,
+    width,
     ...props
   }) => {
 
@@ -22,16 +24,17 @@ const CampusPicker = ({
     ]
 
     return (
-    <SelectList 
-        data={campus}
-        setSelected={(val) => setSelected(val)}
-        save="key"
-        placeholder={user.campus ?? 'Campus'}
-        search = {false}
-        dropdownStyles= {dropdownStylesProps}
-        dropdownItemStyles = {dropdownItemStylesProps}
-        dropdownTextStyles = {dropdownTextStylesProps}
-    />
+            <SelectList 
+                data={campus}
+                setSelected={(val) => setSelected(val)}
+                save="key"
+                placeholder={user.campus ?? 'Campus'}
+                search = {false}
+                dropdownStyles= {{backgroundColor: '#fff', width: dropdownWidth, borderColor: theme.colors.darkBlue}}
+                dropdownTextStyles={{ color: theme.colors.darkBlue}}
+                inputStyles={{ fontWeight: fontWeight, color: theme.colors.darkBlue}}
+                boxStyles={{ borderColor: 'transparent', width: width,}}
+            />
     )
 };
 

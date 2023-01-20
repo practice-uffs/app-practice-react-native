@@ -129,4 +129,7 @@ const styles = StyleSheet.create({
     height: 180,
     bottom: -15,
   },
+  containerButton: {
+    bottom: 50
+  }
 });
