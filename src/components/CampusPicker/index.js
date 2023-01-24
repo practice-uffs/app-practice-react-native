@@ -5,9 +5,10 @@ import { theme } from '../../styles/theme';
 
 const CampusPicker = ({
     setSelected,
-    width,
+    dropdownWidth,
     fontWeight,
     inputStyles,
+    width,
     ...props
   }) => {
 
@@ -23,17 +24,17 @@ const CampusPicker = ({
     ]
 
     return (
-    <SelectList 
-        data={campus}
-        setSelected={(val) => setSelected(val)}
-        save="key"
-        placeholder={user.campus ?? 'Campus'}
-        search = {false}
-        dropdownStyles= {{backgroundColor: '#fff', width: width, borderColor: theme.colors.darkBlue}}
-        dropdownTextStyles={{ color: theme.colors.darkBlue }}
-        inputStyles={{color: theme.colors.darkBlue, fontWeight: fontWeight}}
-        boxStyles={{ borderColor: theme.colors.darkBlue, borderWidth: 1.5 }}
-    />
+            <SelectList 
+                data={campus}
+                setSelected={(val) => setSelected(val)}
+                save="key"
+                placeholder={user.campus ?? 'Campus'}
+                search = {false}
+                dropdownStyles= {{backgroundColor: '#fff', width: dropdownWidth, borderColor: theme.colors.darkBlue}}
+                dropdownTextStyles={{ color: theme.colors.darkBlue}}
+                inputStyles={{ fontWeight: fontWeight, color: theme.colors.darkBlue}}
+                boxStyles={{ borderColor: 'transparent', width: width,}}
+            />
     )
 };
 
