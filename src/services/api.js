@@ -93,25 +93,4 @@ API.getRuMenu = async function (campus) {
 	})
 }
 
-API.getNews = async function () {
-	return await axios.get('https:/practice.uffs.edu.br/feed.xml').then((response) => {
-		const stateFeed = [];
-		if (response.status != 200) {
-			return false;
-		}
-		let feed = new XMLParser().parseFromString(response.data);
-		feed.children[0].children.forEach(element => {
-			if(element.name = 'item'){
-			if(element.children.length == 8){
-				stateFeed.push(element.children);
-			}
-			}
-		});
-		this.setUserData(stateFeed);
-	}).catch((err) => {
-		console.log(err);
-		return false;
-	})
-}
-
 export default API;
