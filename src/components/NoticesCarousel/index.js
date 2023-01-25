@@ -47,7 +47,7 @@ export default class NoticesCarousel extends React.Component {
 
     render() {
         return (
-          <SafeAreaView style={{flex: 1, paddingTop: 250, }}>
+          <SafeAreaView style={{flex: 1 }}>
             <View style={{ flex: 1, flexDirection:'row', justifyContent: 'center', }}>
                 <Carousel
                   layout={"default"}
