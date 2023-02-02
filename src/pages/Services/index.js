@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
 import { StyleSheet, View, TouchableOpacity, Text, Image, ScrollView } from 'react-native';
 import { AuthContext } from '../../context/auth';
-import ServicesTabs from './servicesTabs';
+import ServicesTabs from '../../components/ServicesTabs';
 import { theme } from '../../styles/theme';
-import NoticesCarousel from '../../components/NoticesCarousel/index';
+import NoticesCarousel from '../../components/NoticesCarousel';
 
 export default function Services({navigation}) {
   const {nome} = useContext(AuthContext);

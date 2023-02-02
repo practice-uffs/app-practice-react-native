@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import { Text, View, SafeAreaView, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import XMLParser from 'react-xml-parser';
 import axios from 'axios';
-import { CardNewsCaroussel } from '../CardNewsCarrousel';
+import { CardNewsCaroussel } from '../CardNewsCarousel';
 
 export default class NoticesCarousel extends React.Component {
 
