@@ -6,7 +6,7 @@ import { Box } from "@react-native-material/core";
 import API from '../../services/api';
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import {  ActivityIndicator } from "@react-native-material/core";
-// import { style } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
+import { style } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 import { ListItem } from '@rneui/themed';
 
 //TODO: Adicionar push-refresh
