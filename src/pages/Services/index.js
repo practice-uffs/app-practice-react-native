@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import { StyleSheet, View, TouchableOpacity, Text, Image, ScrollView } from 'react-native';
 import { AuthContext } from '../../context/auth';
-import ServicesTabs from '../../components/ServicesTabs';
+import { ServicesTabs } from '../../components/ServicesTabs';
 import { theme } from '../../styles/theme';
 import NoticesCarousel from '../../components/NoticesCarousel';
 

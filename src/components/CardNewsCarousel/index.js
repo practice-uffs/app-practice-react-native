@@ -4,7 +4,7 @@ import { theme } from '../../styles/theme';
 
 import { useNavigation } from "@react-navigation/native";
 
-export function CardNewsCaroussel(props) {
+export function CardNewsCarousel(props) {
     const navigation = useNavigation();
     return(
       <View style={styles.card}>

@@ -3,7 +3,7 @@ import { Text, View, SafeAreaView, Image, TouchableOpacity, StyleSheet } from 'r
 import Carousel from 'react-native-snap-carousel';
 import XMLParser from 'react-xml-parser';
 import axios from 'axios';
-import { CardNewsCaroussel } from '../CardNewsCarousel';
+import { CardNewsCarousel } from '../CardNewsCarousel';
 
 export default class NoticesCarousel extends React.Component {
 
@@ -36,7 +36,7 @@ export default class NoticesCarousel extends React.Component {
 
     _renderItem({item}){
         return (
-          <CardNewsCaroussel
+          <CardNewsCarousel
             image={'https://practice.uffs.edu.br'+(item[6].children[0].value[0] != '/' ? '/images/' : '')+item[6].children[0].value} 
             content={item[7].value.replace(/&lt;/gi, "<").replace(/&gt;/gi, ">").replace(/&quot;/gi, "'")} 
             title={item[0].value.replace(/&lt;/gi, "<").replace(/&gt;/gi, ">").replace(/&quot;/gi, "'")} 
