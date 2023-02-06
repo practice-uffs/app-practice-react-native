@@ -3,7 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Text, Image, ScrollView } from 'rea
 import { AuthContext } from '../../context/auth';
 import ServicesTabs from '../../components/ServicesTabs';
 import { theme } from '../../styles/theme';
-import NoticesCarousel from '../../components/NoticesCarousel';
+import NoticesCarousel from '../../components/NoticesCarousel/index';
 
 export default function Services({navigation}) {
   const {nome} = useContext(AuthContext);
