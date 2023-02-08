@@ -73,6 +73,7 @@ const style = StyleSheet.create({
       flexDirection: 'row',
       paddingHorizontal: 15,
       borderWidth: 0.5,
+      borderRadius: 8
     },
   });
   
