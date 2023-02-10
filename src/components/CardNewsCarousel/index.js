@@ -28,17 +28,17 @@ export function CardNewsCarousel(props) {
 
 const styles = StyleSheet.create({
     card: {
-      backgroundColor: theme.colors.whiteBackground,
-      width: 'auto',
-      zIndex: 0,
-      elevation:0,
-      borderRadius: 10,
-      height: 280,
-      marginLeft: 25,
-      marginRight: 25,
+      backgroundColor: '#fff',
+    width: 'auto',
+    zIndex: 0,
+    elevation:0,
+    borderRadius: 10,
+    height: 280,
+    marginLeft: 25,
+    marginRight: 25,
     },
     cardImage: {
-      height: 150,
+      height: 180,
       borderTopRightRadius: 10,
       borderTopLeftRadius: 10,
     },
@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
       lineHeight: 22,
       fontSize: 16,
       textAlign: 'center',
+      height: 70
     },
   
   })

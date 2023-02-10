@@ -16,7 +16,7 @@ export default function Services({navigation}) {
         <Text style={styles.subTtile}>Uma ponte entre você e a construção de uma universidade melhor.</Text>
         </View>
       </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'center', height: 200, alignItems: 'center', marginTop: 30 }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'center', height: 200, alignItems: 'center', marginTop: 30, marginBottom: 50}}>
         <Image source={require('../../assets/images/services-img.png')} style={{ marginRight: 25 }}></Image>
         <Text style={{ color: '#003753' }}>
         • Áudio{'\n'}• Texto{'\n'}• Imagem{'\n'}• Estúdio{'\n'}• Software{'\n'}• Live
@@ -28,7 +28,7 @@ export default function Services({navigation}) {
           Notícias
         </Text>
         <NoticesCarousel />
-        <View style={{ marginTop: 40 }}>
+        <View style={{ marginTop: 40, marginBottom: 100 }}>
           <TouchableOpacity 
             onPress= { () => navigation.navigate('NewsFeed') }
             style={styles.buttonContainer}>
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   title: {
-    fontSize: 24, fontWeight: 'bold', textAlign: 'center'
+    fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginTop: 50
   },
   subTtile: {
     fontSize: 14, color: theme.colors.darkBlue, textAlign: 'center'
