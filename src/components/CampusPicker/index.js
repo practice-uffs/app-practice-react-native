@@ -9,6 +9,8 @@ const CampusPicker = ({
     fontWeight,
     inputStyles,
     width,
+    dropdownRight,
+    dropdownTop,
     ...props
   }) => {
 
@@ -30,7 +32,7 @@ const CampusPicker = ({
                 save="key"
                 placeholder={user.campus ?? 'Campus'}
                 search = {false}
-                dropdownStyles= {{backgroundColor: '#fff', width: dropdownWidth, borderColor: theme.colors.darkBlue}}
+                dropdownStyles= {{backgroundColor: '#fff', width: dropdownWidth, borderColor: theme.colors.darkBlue, right: dropdownRight, top: dropdownTop}}
                 dropdownTextStyles={{ color: theme.colors.darkBlue}}
                 inputStyles={{ fontWeight: fontWeight, color: theme.colors.darkBlue}}
                 boxStyles={{ borderColor: 'transparent', width: width,}}

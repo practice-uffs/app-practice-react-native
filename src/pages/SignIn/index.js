@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect }  from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Keyboard} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Keyboard, Image} from 'react-native';
 import { Button, Snackbar } from "@react-native-material/core";
 import { theme } from '../../styles/theme';
 import * as Animatable from 'react-native-animatable';
@@ -7,6 +7,9 @@ import { AuthContext } from '../../context/auth';
 import Input from '../../components/Inputs/Input';
 import Loader from '../../components/Loaders/loader';
 import CampusPicker from '../../components/CampusPicker/index';
+import Icon, { Icons } from '../../assets/icons/Icons';
+import { SvgXml } from 'react-native-svg';
+import { montanha1, montanha2, montanha3, logo, sol } from './svg';
 
 import {
 	LOGIN_ATTEMPTS,
@@ -27,7 +30,7 @@ export default function SignIn({navigation}) {
   const [attempts, setAttempts] = useState(LOGIN_ATTEMPTS);
   const [timeoutLogin, setTimeoutLogin] = useState(TIMEOUT_LOGIN);
   const [disabledLogin, setDisabledLogin] = useState(false);
-  
+
   async function login() {
     setLoading(true);
     let signned = await signIn(inputs.iduffs, inputs.password, campus);
@@ -102,9 +105,7 @@ export default function SignIn({navigation}) {
           style={ styles.button } 
           onPress= { () => navigation.navigate('Welcome') }
         >
-          <Text style={styles.buttonTextBack}> 
-            Voltar
-          </Text>
+          <Icon type={Icons.Ionicons} name={'arrow-back-circle-outline'} color={theme.colors.darkBlue} size={30}/>
         </TouchableOpacity>
       </View>
 
@@ -130,9 +131,15 @@ export default function SignIn({navigation}) {
           error={errors.password}
           password
           />
-        <CampusPicker
-          setSelected={setCampus}
-        />
+          <View style={styles.campusContainer}>
+            <CampusPicker
+            setSelected={setCampus}
+            dropdownWidth={300}
+            dropdownRight={-20}
+            dropdownTop={-10}
+            width={415}
+            />
+          </View>
         {disabledLogin && 
         <View style={[styles.blockedLoginMessage]}>
           <Text style={{float:'left', width: 'auto', paddingRight: 10}}>Bloqueado por: {timeoutLogin} segundos</Text>
@@ -145,15 +152,33 @@ export default function SignIn({navigation}) {
        <Button title="Entrar"
         disabled={(inputs.iduffs == '' || inputs.password=='' || !campus || disabledLogin || loading )}
         loading={loading}
+        uppercase={false}
         loadingIndicatorPosition="overlay"
-        onPress={validate} />
+        onPress={validate}
+        style={styles.entrar}/>
+
       </Animatable.View>
-      
+
+      <Animatable.View delay={1000} animation="fadeInUp"  style={styles.svgMountain1}>
+            <SvgXml xml={montanha1} style={{scale: 0.4}}/>
+      </Animatable.View>
+      <Animatable.View delay={800} animation="fadeInUp"  style={styles.svgMountain2}>
+            <SvgXml xml={montanha2} style={{scale: 0.4}}/>
+      </Animatable.View>
+      <Animatable.View delay={600} animation="fadeInUp"  style={styles.svgMountain3}>
+            <SvgXml xml={montanha3} style={{scale: 0.4}}/>
+      </Animatable.View>
+      <Animatable.View delay={1300} animation="fadeInUp"  style={styles.sol}>
+        <SvgXml xml={sol} style={{scale: 0.1}}/>
+      </Animatable.View>
+      <Animatable.View delay={800} animation="fadeInRight"  style={styles.logo}>
+        <SvgXml xml={logo} style={{scale: 0.5, opacity: 0.5}}/>
+      </Animatable.View>
       {errorMessage ?
         <Snackbar
           message={errorMessage}
-          action={<Button variant="text" title="Fechar" compact onPress={() => setErrorMessage(null)}/>}
-          style={{ position: "absolute", start: 16, end: 16, bottom: 16 }}
+          action={<Button variant="text" title="Fechar" color={"#fff"} compact onPress={() => setErrorMessage(null)}/>}
+          style={{ position: "absolute", start: 16, end: 16, bottom: 16, backgroundColor:"#2F7B9A"}}
         /> : null
       }
     </SafeAreaView>
@@ -167,6 +192,7 @@ const styles = StyleSheet.create({
   button:{
     width: '20%',
     marginLeft: 20,
+    marginTop: 10,
     zIndex: 1
   },
   buttonText:{
@@ -200,7 +226,8 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingStart:'5%',
     paddingEnd:'5%',
-    zIndex: 0,
+    zIndex: 5,
+    flexDirection: "column"
   },
 
   iduffs: {
@@ -225,16 +252,58 @@ const styles = StyleSheet.create({
     float: 'left',
     position: 'relative',
     flexDirection: 'row',
-    marginTop: 10,
+    marginTop: 38,
     marginBottom: 15,
     lineHeight: 10,
     fontSize: 20,
-    zIndex: 1
+    zIndex: 1,
   },
   countDown:{
     float: 'left',
     width: 20,
     height: 15,
     marginTop: -6
+  },
+  entrar : {
+    backgroundColor: "#2F7B9A",
+    width: 120,
+    height: 40,
+    justifyContent: 'center',
+    left: 120,
+    top: 15
+  },
+  svgMountain1: {
+    width: '100%',
+    zIndex: 4,
+    position: 'absolute',
+    top: 700
+  },
+  svgMountain2: {
+    width: '100%',
+    zIndex: 3,
+    position: 'absolute',
+    top: 680
+  },
+  svgMountain3: {
+    width: '100%',
+    zIndex: 2,
+    position: 'absolute',
+    top: 680
+  },
+  sol: {
+    zIndex: 1,
+    position: 'absolute',
+    top: 710,
+    left: 120
+  },
+  campusContainer: {
+    position: 'absolute',
+    top: 195,
+    zIndex: 6
+  },
+  logo: {
+    width: '100%',
+    position: 'absolute',
+    left: 110,
   }
 });
