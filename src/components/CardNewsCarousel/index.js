@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView } from 'react-native';
-import { theme } from '../../styles/theme';
 
 import { useNavigation } from "@react-navigation/native";
 
