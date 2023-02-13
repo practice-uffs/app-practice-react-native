@@ -31,7 +31,7 @@ export function CardNews(props) {
                 date: props.date
               });
             }}>
-            <Image style={styles.image} height="300px" source={{uri : props.image}} />
+            <Image style={styles.image} height={300} source={{uri : props.image}} />
             <Text style={styles.title}>{props.title}</Text>
            
             <Text style={styles.date}>{formatDate(props.date)}</Text>
