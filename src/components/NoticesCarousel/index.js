@@ -2,11 +2,7 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
-  Text,
-  TouchableOpacity,
   Dimensions,
-  SafeAreaView,
-  Image
 } from 'react-native';
 import Carousel from 'react-native-anchor-carousel';
 import XMLParser from 'react-xml-parser';
@@ -16,7 +12,7 @@ import { CardNewsCarousel } from '../CardNewsCarousel';
 
 const {width: windowWidth} = Dimensions.get('window');
 
-export default class NumberCarousel extends Component {
+export default class NoticesCarousel extends Component {
 
     constructor(props){
         super(props);
