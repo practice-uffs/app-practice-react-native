@@ -6,6 +6,7 @@ import SignIn from '../pages/SignIn'
 import Configuration from '../pages/Configuration'
 import About from '../pages/About'
 import Home from '../pages/Home'
+import NewsFeed from '../pages/NewsFeed'
 import News from '../pages/News'
 import CustomDrawer from '../components/CustomDrawer'
 import RuMenu from '../pages/RuMenu'
@@ -63,6 +64,11 @@ const AuthRoutes = () => {
                 name="DrawerTab"
                 component={ DrawerRoutes }
                 options= {{ headerShown: false}}
+            />
+            <Stack.Screen
+                options={{headerShown: false}}
+                name="NewsFeed"
+                component={ NewsFeed }
             />
             <Stack.Screen
                 options={{headerShown: false}}
