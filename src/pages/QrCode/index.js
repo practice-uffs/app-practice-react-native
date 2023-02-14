@@ -42,7 +42,7 @@ export default function QrCode({navigation}) {
   if (hasPermission == null){
     return (
       <View style={styles.container}>
-          <Text>Requisitando permissão da camera</Text>
+          <Text style={{ color: '#fff' }}>Requisitando permissão da camera</Text>
       </View>
     );
   } 
@@ -129,11 +129,9 @@ const styles = StyleSheet.create({
   },
   scanButton:{
     width: '35%',
-    borderWidth: 2,
     borderRadius: 10,
-    borderColor: '#fff',
-    backgroundColor: '#fff',
     position: 'absolute',
+    backgroundColor: '#fff',
     top: -20
   },
   info: {
@@ -145,7 +143,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     height: 250,
     top: -50,
-    width: '80%'
+    width: 320
   },
   infoOFF: {
     color: '#264653'
