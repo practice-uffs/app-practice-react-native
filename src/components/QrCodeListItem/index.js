@@ -21,7 +21,7 @@ export default function ListItem({ data }){
 
   return (
     <TouchableOpacity style={styles.container} onPress={handleUrl}> 
-      <Text>{data.code}</Text>
+      <Text style={{ paddingRight: 15, color: '#264653' }}>•</Text><Text>{data.code}</Text>
     </TouchableOpacity>
   )
 } 
@@ -32,10 +32,8 @@ const styles = StyleSheet.create({
     margin: 8, 
     flexDirection: 'row',
     borderRadius: 5,
-    backgroundColor: '#FFF',
+    backgroundColor: 'transparent',
     padding: 7,
-    elevation: 1.5,
-    shadowColor: '#000',
-    shadowOpacity: 0.2
+    elevation: 1.5
   }
 })

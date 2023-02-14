@@ -8,6 +8,7 @@ export default function QrCode({navigation}) {
   const [hasPermission, setHasPermission] = useState(null)
   const [scanned, setScanned] = useState(false)
   const [allCodes, setAllCodes] = useState([])
+  const [hasCode, setCode] = useState(false)
 
 
   const askCameraPermission = () => {
@@ -25,10 +26,11 @@ export default function QrCode({navigation}) {
   const handleBarCodeScanned = ({type, data}) => {
     if (allCodes.find(codeList => codeList.id == data) == undefined && data !== ''){
       setAllCodes([...allCodes, {id: data, code: data}])
+      setCode(true);
     } else { 
       Alert.alert(
         "Ops!",
-        "Este qrCode já foi lido",
+        "Este QRCode já foi lido",
         [
           { text: "OK", onPress: () => console.log("OK Pressed") }
         ]
@@ -64,11 +66,17 @@ export default function QrCode({navigation}) {
 
         <View style={styles.footer}>
           <View style={styles.scanButton} >
-           {scanned ? <Button  title={'Escanear'} onPress={ () => setScanned(false)}/> : <Button title={'Escaneando'} onPress={ () => setScanned(false)} color='#4388a5'/>}
+           {scanned ? <Button  title={'Escanear'} color={theme.colors.darkBlue} onPress={ () => setScanned(false)}/> : <Button title={'Escaneando'} onPress={ () => setScanned(false)} color={theme.colors.darkBlue}/>}
           </View>
-          
 
-          <FlatList
+          <View style={{ marginTop: 50 }}>
+           {scanned ? <View></View> : <Text style={styles.info}>Direcione sua câmera para o QR Code</Text>}
+          </View>
+
+          <View style={{ marginTop: 50 }}>
+            {hasCode ?
+            <View style={styles.flatlistContainer}>
+            <FlatList
             marginVertical={5}
             marginHorizontal={5}
             data={allCodes}
@@ -76,7 +84,8 @@ export default function QrCode({navigation}) {
             showsVerticalScrollIndicator={false}
             keyExtractor={item => String(item.id)}
             renderItem={ ({item}) => <QrCodeListItem data={item}/> }
-          />
+            /></View> : <View></View> }
+          </View>
           
         </View>
         
@@ -90,16 +99,15 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: '#003753',
     alignItems: 'center',
     justifyContent: 'center'
   },
   barcodebox: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    height: '50%',
-    width: '70%',
+    height: '40%',
+    width: '80%',
     overflow: 'hidden',
     borderRadius: 15,
     backgroundColor: 'white',
@@ -112,18 +120,34 @@ const styles = StyleSheet.create({
   footer:{
     flex: 1,
     fontSize: 16,
-    marginTop: 20,
     width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   mainText:{
     fontSize: 16,
     margin: 10
   },
   scanButton:{
-    color:'#4388a5',
-    width: '70%',
-    marginBottom: 10
+    width: '35%',
+    borderWidth: 2,
+    borderRadius: 10,
+    borderColor: '#fff',
+    backgroundColor: '#fff',
+    position: 'absolute',
+    top: -20
+  },
+  info: {
+    color: '#fff'
+  },
+  flatlistContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    marginTop: 20,
+    height: 250,
+    top: -50,
+    width: '80%'
+  },
+  infoOFF: {
+    color: '#264653'
   }
 });

@@ -39,7 +39,7 @@ function News({route}){
               ></Icon.Button>
           </View>
         <ScrollView>       
-          <Image style={styles.image} height="300px" source={{uri : route.params.image}} />
+          <Image style={styles.image} height={300} source={{uri : route.params.image}} />
           <View style={styles.title}>
             <RenderHtml
                 contentWidth={width}
