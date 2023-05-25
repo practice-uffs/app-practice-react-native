@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   svgWave: {
     position: 'absolute',
     width: '100%',
-    height: 180,
+    height: '25%',
     bottom: -15,
   },
   containerButton: {
