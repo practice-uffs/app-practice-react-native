@@ -176,11 +176,12 @@ export default function SignIn({navigation}) {
               </Animatable.View>
               
             </View>
+
             {errorMessage ?
               <Snackbar
                 message={errorMessage}
                 action={<Button variant="text" title="Fechar" color={"#fff"} compact onPress={() => setErrorMessage(null)}/>}
-                style={{ position: "absolute", start: 16, end: 16, bottom: 16, backgroundColor:"#2F7B9A"}}
+                style={{ position: "absolute", start: 16, end: 16, bottom: '28%', backgroundColor:"#2F7B9A", zIndex: 99}}
               /> : null
             }
             </ScrollView>
