@@ -163,7 +163,19 @@ export default function SignIn({navigation}) {
                 <SvgXml xml={logo} style={{scale: 0.45, opacity: 0.3}}/>
             </Animatable.View>
 
-            <View style={{width: '100%', height: 350, marginTop: 100}}>
+    
+
+            {errorMessage ?
+              <Snackbar
+                message={errorMessage}
+                action={<Button variant="text" title="Fechar" color={"#fff"} compact onPress={() => setErrorMessage(null)}/>}
+                style={{ position: "absolute", start: 16, end: 16, bottom: '28%', backgroundColor:"#2F7B9A", zIndex: 99}}
+              /> : null
+            }
+           
+          </ScrollView>
+
+          <View style={{width: '100%', flex: 1, bottom: '0%',position: 'absolute'}}>
               <Animatable.View delay={1000} animation="fadeInUp"  style={styles.svgMountain1}>
                     <SvgXml xml={montanha1} style={{scale: 0.45}}/>
               </Animatable.View>
@@ -178,16 +190,6 @@ export default function SignIn({navigation}) {
               </Animatable.View>
               
             </View>
-
-            {errorMessage ?
-              <Snackbar
-                message={errorMessage}
-                action={<Button variant="text" title="Fechar" color={"#fff"} compact onPress={() => setErrorMessage(null)}/>}
-                style={{ position: "absolute", start: 16, end: 16, bottom: '28%', backgroundColor:"#2F7B9A", zIndex: 99}}
-              /> : null
-            }
-           
-          </ScrollView>
         </View>
   );
 } 
@@ -281,32 +283,35 @@ contentContainer: {
     height: 40,
     justifyContent: 'center',
     alignSelf: 'center',
-    top: 15
+    top: 15,
+    marginBottom: 300,
   },
   svgMountain1: {
     width: '100%',
     zIndex: 4,
     position: 'absolute',
-    right: 55
+    right: 55,
+    top: -120,
   },
   svgMountain2: {
     width: '100%',
     zIndex: 3,
     position: 'absolute',
     right: 90,
-    top: -40
+    top: -160
   },
   svgMountain3: {
     width: '100%',
     zIndex: 2,
     position: 'absolute',
-    right: 30
+    right: 30,
+    top: -120
   },
   sol: {
     zIndex: 1,
     position: 'absolute',
     left: 80,
-    top: 20
+    top: -100
 
   },
   campusContainer: {
