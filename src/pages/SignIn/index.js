@@ -98,7 +98,9 @@ export default function SignIn({navigation}) {
   }, [timeoutLogin, disabledLogin]);
 
   return (
-        <ScrollView style={{flex: 1}}>
+      <View style={styles.container}>
+          <ScrollView style={styles.contentContainer}>
+       
             <Loader visible={loading} />
             <View style={styles.backContainer}>
               <TouchableOpacity
@@ -161,7 +163,7 @@ export default function SignIn({navigation}) {
                 <SvgXml xml={logo} style={{scale: 0.45, opacity: 0.3}}/>
             </Animatable.View>
 
-            <View style={{height: 300, width: '100%', marginTop: '10%'}}>
+            <View style={{width: '100%', height: 350, marginTop: 100}}>
               <Animatable.View delay={1000} animation="fadeInUp"  style={styles.svgMountain1}>
                     <SvgXml xml={montanha1} style={{scale: 0.45}}/>
               </Animatable.View>
@@ -184,7 +186,9 @@ export default function SignIn({navigation}) {
                 style={{ position: "absolute", start: 16, end: 16, bottom: '28%', backgroundColor:"#2F7B9A", zIndex: 99}}
               /> : null
             }
-            </ScrollView>
+           
+          </ScrollView>
+        </View>
   );
 } 
 
@@ -212,13 +216,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 14
   },
+
   container: {
     flex: 1,
-    backgroundColor: theme.colors.whiteBackground,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
+    backgroundColor: '#fff',
+},
+contentContainer: {
+    flexGrow: 1,
+},
   containerHeader: {
     width: '100%',
     flex: 1,
@@ -275,7 +280,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 40,
     justifyContent: 'center',
-    left: 120,
+    alignSelf: 'center',
     top: 15
   },
   svgMountain1: {
