@@ -8,6 +8,7 @@ import Carousel from 'react-native-anchor-carousel';
 import XMLParser from 'react-xml-parser';
 import axios from 'axios';
 import { CardNewsCarousel } from '../CardNewsCarousel';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const {width: windowWidth} = Dimensions.get('window');
@@ -23,13 +24,24 @@ export default class NoticesCarousel extends Component {
     }
     
     componentDidMount(){
-      this.loadNews();
+      AsyncStorage.getItem('carouselItems').then(value => {
+      if (value) {                    // verifica se existe noticias no storage, se nao, carrega novamente do site
+        const carouselItems = JSON.parse(value);
+        this.setState({ carouselItems });
+      } else{
+        this.loadNews();
+      }
+      })
+      .catch(error => {
+        console.log('Erro ao recuperar dados do carrossel do armazenamento:', error);
+      });
     }
     
     loadNews(){
       const stateFeed = [];
       axios.get('https:/practice.uffs.edu.br/feed.xml').then((response) => {
         let feed = new XMLParser().parseFromString(response.data);
+
         feed.children[0].children.forEach(element => {
           if(element.name = 'item'){
             if(element.children.length == 8){
@@ -37,7 +49,17 @@ export default class NoticesCarousel extends Component {
             }
           }
         });
-        this.setState({ carouselItems: stateFeed });
+        const limit = 50; // Define o limite de 50 itens no carrossel para não haver sobrecarga no app
+        const limitedFeed = stateFeed.slice(0, limit);
+
+        this.setState({ carouselItems: limitedFeed });
+        // salva os itens carregados no storage
+        AsyncStorage.setItem('carouselItems', JSON.stringify(limitedFeed)).then(() => {
+          console.log('Dados do carrossel salvos no storage.');
+        })
+        .catch(error => {
+          console.log('Erro ao salvar dados do carrossel no storage:', error);
+        });
       });
     }
 
