@@ -73,9 +73,11 @@ export default function ServicesTabs() {
           <ListItem key={index} containerStyle={{ backgroundColor: 'transparent', marginBottom: 10 }}>
             <ListItem.Content flexDirection={'row'} justifyContent={'space-between'}>
               <View style={{ flexDirection: 'column' }}>
-                <ListItem.Title>{element.title.length <= 30? element.title : element.title.substring(0,30)+"..."}</ListItem.Title>
+                <ListItem.Title style={{fontWeight:'600', color: '#003753', fontSize: 30 }}>{element.title.length <= 30? element.title : element.title.substring(0,30)+"..."}</ListItem.Title>
                 <ListItem.Subtitle>{element.description.length <= 50 ? element.description : element.description.substring(0, 50)  + "..."}</ListItem.Subtitle>
-                <Text style={{ marginTop: 10 }}>{element.created_at}</Text>
+                <View style={{flexDirection: 'row', width: 300, height: 40, marginTop: 15, backgroundColor:'#003753', borderRadius: 3 }}>
+                  <Text style={{ marginTop: 5, marginLeft: 10, color:'white' }}>Criado em {element.created_at}</Text>
+                </View>
               </View>
               <Icon name="chevron-right" style={{ alignSelf: 'center'}}/>
             </ListItem.Content>
@@ -93,7 +95,7 @@ export default function ServicesTabs() {
       );
     }
   }
-
+  //console.log(tabs)
   return (
     <View flex={1} style={{ flexDirection: 'column' }}>
       <Block flex={1}>
@@ -110,10 +112,21 @@ export default function ServicesTabs() {
                 </Block>
               </Pressable>
             )
+            
           })}
+            
         </View>
-      </Block>
+            
 
+      </Block>
+      
+      <View style={{backgroundColor: 'transparent', flexDirection: 'row', justifyContent: 'space-around', marginTop: 30 }}>
+        <Text size={30} style={{ fontWeight: '700' }} color={tabs[selectedTab]?.selectedColor}>
+          {tabs[selectedTab]?.name}
+        </Text>
+      </View>
+        
+        
       {loading ?
         <Block flex={6} middle>
           <ActivityIndicator size="large" color="#003753" marginBottom={20} marginTop={20} />
