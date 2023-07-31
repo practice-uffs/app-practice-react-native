@@ -2,6 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, View } from 'react-native';
 
+import BusSchedule from '../BusSchedule/index';
 import Services from '../Services';
 import QrCode from '../QrCode';
 import NewsFeed from '../NewsFeed';
@@ -84,6 +85,17 @@ export default function TabNavigator(){
                     options={{
                         tabBarIcon: ({size, color}) => (
                             <Entypo name="bug" size={size} color={color} />
+                        ),
+                        headerShown: false
+                    }} 
+                />
+
+                <Tab.Screen 
+                    name="Ônibus" 
+                    component={BusSchedule}
+                    options={{
+                        tabBarIcon: ({size, color}) => (
+                            <Entypo name="clock" size={size} color={color} />
                         ),
                         headerShown: false
                     }} 
