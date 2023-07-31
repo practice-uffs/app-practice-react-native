@@ -81,7 +81,7 @@ const BusSchedule = () => {
           <ScrollView style={styles.horariosList}>
             {horarios.map((horario, index) => (
               <View key={index} style={styles.horarioItem}>
-                <Text>Descrição: {horario.lidescricao}</Text>
+                <Text>Linha: {horario.lidescricao}</Text>
                 <Text>Horário: {horario.hrhorario}</Text>
               </View>
             ))}
