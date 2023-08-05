@@ -11,6 +11,8 @@ import Aura from '../Aura';
 import Header from '../../components/Header';
 
 import { Entypo } from '@expo/vector-icons'
+import Horario from '../Horario';
+import Biblio from '../Biblioteca';
 
 const Tab = createBottomTabNavigator();
 
@@ -88,6 +90,27 @@ export default function TabNavigator(){
                         headerShown: false
                     }} 
                 />
+                <Tab.Screen 
+                    name="Horario" 
+                    component={Horario}
+                    options={{
+                        tabBarIcon: ({size, color}) => (
+                            <Entypo name="clock" size={size} color={color} />
+                        ),
+                        headerShown: false
+                    }} 
+                />
+                <Tab.Screen 
+                    name="Biblioteca" 
+                    component={Biblio}
+                    options={{
+                        tabBarIcon: ({size, color}) => (
+                            <Entypo name="book" size={size} color={color} />
+                        ),
+                        headerShown: false
+                    }} 
+                />
+                
             
             </Tab.Navigator>
         </View>
