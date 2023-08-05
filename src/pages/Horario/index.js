@@ -64,7 +64,7 @@ export default function Horario() {
 function BusSchedule({ busScheduleData }) {
   return (
     <View style={styles.busScheduleContainer}>
-    <Text style={styles.busScheduleTitle}>Horários de ônibus para a UFFS</Text>
+    <Text style={styles.busScheduleTitle}>Horários de ônibus</Text>
       <View style={styles.busScheduleList}>
         <ScrollView style={styles.busScheduleList}>
             {busScheduleData.map((bus, index) => (
@@ -81,7 +81,7 @@ function BusSchedule({ busScheduleData }) {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme.colors.lightOrange,
+      backgroundColor: theme.colors.success,
       paddingVertical: 20,
       paddingHorizontal: 16,
     },
@@ -89,13 +89,13 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: theme.colors.white,
       borderRadius: 10,
-      paddingVertical: 20,
+      paddingVertical: 0,
       paddingHorizontal: 16,
     },
     busScheduleTitle: {
       fontSize: 20,
       fontWeight: 'bold',
-      marginBottom: 10,
+      marginBottom: 20,
       textAlign: 'center',
     },
     busScheduleList: {
