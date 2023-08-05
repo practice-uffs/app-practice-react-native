@@ -1,8 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Linking} from 'react-native';
 import { theme } from '../../styles/theme';
 
 export default function Horarios() {
+    const horariosSiteURL = 'http://horarios.autoviacao.com/';
+      const handleOpenURL = () => {
+        Linking.openURL(horariosSiteURL);
+  };
     const horarios = [
         { linha: 'TOMAZELLI / FAG / UNIVERSIDADE FEDERAL / THIAGO VILA PÁSCOA / VILA ESPERANÇA / FACH II.', horario: '04:15:00' },
         { linha: '24- UNIVERSIDADE FEDERAL', horario: '06:35:00' },
@@ -35,6 +39,9 @@ export default function Horarios() {
             <Text style={styles.horarioText}>{item.horario}</Text>
           </View>
         ))}
+        <Text style={styles.link} onPress={handleOpenURL}>
+        Acesse o site da Auto Viação para mais informações.
+      </Text>
       </ScrollView>
     </View>
   );

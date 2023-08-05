@@ -4,7 +4,7 @@ import { theme } from '../../styles/theme';
 import { Feather } from '@expo/vector-icons';
 
 export default function Biblioteca() {
-   const bibliotecaSiteURL = 'https://www.uffs.edu.br/campi/chapeco/biblioteca/biblioteca-do-campus'; // Substitua pelo URL do site da biblioteca
+   const bibliotecaSiteURL = 'https://www.uffs.edu.br/campi/chapeco/biblioteca/biblioteca-do-campus';
       const handleOpenURL = () => {
         Linking.openURL(bibliotecaSiteURL);
   };
