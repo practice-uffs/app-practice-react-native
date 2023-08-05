@@ -1,12 +1,13 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, View } from 'react-native';
-
 import Services from '../Services';
 import QrCode from '../QrCode';
 import NewsFeed from '../NewsFeed';
 import FuncionalitySamples from '../FuncionalitySamples';
 import Aura from '../Aura';
+import Horarios from '../Horarios';
+import Biblioteca from '../Biblioteca';
 
 import Header from '../../components/Header';
 
@@ -88,7 +89,31 @@ export default function TabNavigator(){
                         headerShown: false
                     }} 
                 />
-            
+
+                
+
+                 <Tab.Screen 
+                    name="Horarios" 
+                    component={Horarios}
+                    options={{
+                        tabBarIcon: ({size, color}) => (
+                            <Entypo name="clock" size={size} color={color} />
+                        ),
+                        headerShown: false
+                    }} 
+                />
+
+                <Tab.Screen 
+                    name="Biblioteca" 
+                    component={Biblioteca}
+                    options={{
+                        tabBarIcon: ({size, color}) => (
+                            <Entypo name="book" size={size} color={color} />
+                        ),
+                        headerShown: false
+                    }} 
+                />
+
             </Tab.Navigator>
         </View>
     )
