@@ -7,6 +7,7 @@ import QrCode from '../QrCode';
 import NewsFeed from '../NewsFeed';
 import FuncionalitySamples from '../FuncionalitySamples';
 import Aura from '../Aura';
+import Schedules from '../Schedules';
 
 import Header from '../../components/Header';
 
@@ -84,6 +85,17 @@ export default function TabNavigator(){
                     options={{
                         tabBarIcon: ({size, color}) => (
                             <Entypo name="bug" size={size} color={color} />
+                        ),
+                        headerShown: false
+                    }} 
+                />
+
+                <Tab.Screen 
+                    name="Horários" 
+                    component={Schedules}
+                    options={{
+                        tabBarIcon: ({size, color}) => (
+                            <Entypo name="clock" size={size} color={color} />
                         ),
                         headerShown: false
                     }} 

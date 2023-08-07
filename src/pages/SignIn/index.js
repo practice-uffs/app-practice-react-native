@@ -1,12 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { theme } from '../../styles/theme';
 import * as Animatable from 'react-native-animatable';
 
+import Entypo from 'react-native-vector-icons/Entypo';
+
 import {useNavigation} from '@react-navigation/native'
 
 export default function SignIn() {
+
+  const [passorwdVisible, setPassorwdVisible] = useState(true)
+
   const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={styles.backContainer}>
@@ -36,10 +42,19 @@ export default function SignIn() {
           style= {styles.input}
         />
         <Text style={ styles.senha }>Senha</Text>
-        <TextInput 
-          placeholder= "Sua Senha"
-          style= {styles.input}
-        />
+        <View style={{flexDirection: 'row'}}>
+          <TextInput 
+            secureTextEntry={passorwdVisible}
+            placeholder= "Sua Senha"
+            style={styles.inputPassword}
+          />
+          <Entypo 
+            name={passorwdVisible ? 'eye' : 'eye-with-line'} 
+            color={'black'} size={24} 
+            style={{padding: 10}}
+            onPress={() => setPassorwdVisible(!passorwdVisible)} 
+          />
+        </View>
         <TouchableOpacity 
           onPress= { () => navigation.navigate('TabNavigator')}
         >
@@ -95,7 +110,13 @@ const styles = StyleSheet.create({
   input: {
     borderBottomWidth: 1,
     height: 40,
-    marginBottom: 12
+    marginBottom: 12,
+  },
+  inputPassword: {
+    borderBottomWidth: 1,
+    height: 40,
+    marginBottom: 12,
+    width: '90%'
   },
   logoPractice: {
     flex: 2,
