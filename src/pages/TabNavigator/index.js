@@ -8,6 +8,7 @@ import NewsFeed from '../NewsFeed';
 import FuncionalitySamples from '../FuncionalitySamples';
 import Aura from '../Aura';
 import Schedules from '../Schedules';
+import Library from '../Library';
 
 import Header from '../../components/Header';
 
@@ -91,11 +92,22 @@ export default function TabNavigator(){
                 />
 
                 <Tab.Screen 
-                    name="Horários" 
+                    name="Ônibus" 
                     component={Schedules}
                     options={{
                         tabBarIcon: ({size, color}) => (
                             <Entypo name="clock" size={size} color={color} />
+                        ),
+                        headerShown: false
+                    }} 
+                />
+
+                <Tab.Screen 
+                    name="Biblioteca" 
+                    component={Library}
+                    options={{
+                        tabBarIcon: ({size, color}) => (
+                            <Entypo name="book" size={size} color={color} />
                         ),
                         headerShown: false
                     }} 

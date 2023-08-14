@@ -3,13 +3,13 @@ import { StyleSheet, Text, View, ScrollView, Linking } from 'react-native';
 
 import SelectDropdown from 'react-native-select-dropdown'
 
-const DAYS = ['Segunda','Terça','Quarta','Quinta','Sexta','Sábado']
-
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function Schedules() {
 
 	const [day, setDay] = useState('')
+
+	const DAYS = ['Segunda','Terça','Quarta','Quinta','Sexta','Sábado']
 
 	const SCHEDULES_DATA = {
 		days_of_week: [
@@ -141,7 +141,7 @@ export default function Schedules() {
 
 const styles = StyleSheet.create({
     viewInfo: {
-		borderBottomWidth: 2, 
+		borderTopWidth: 1, 
 		padding: 3, 
 		gap: 10, 
 		flexDirection: 'row', 
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between'
 	},
 	dropdownSelect: {
-		width: '76%', 
+		width: '75%', 
 		backgroundColor: '#F8F8F8', 
 		elevation: 5, 
 		borderBottomColor: 'black', 
