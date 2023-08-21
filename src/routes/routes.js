@@ -10,6 +10,7 @@ import NewsFeed from '../pages/NewsFeed'
 import News from '../pages/News'
 import CustomDrawer from '../components/CustomDrawer'
 import RuMenu from '../pages/RuMenu'
+import Order from '../pages/Order'
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -78,7 +79,12 @@ const AuthRoutes = () => {
             <Stack.Screen 
                 name='Cardápio RU'
                 component= { RuMenu }  
-            /> 
+            />
+            <Stack.Screen
+                options={{ title: 'Pedido' }}
+                name='Order'
+                component= { Order }  
+            />  
         </Stack.Navigator>
     )
 }

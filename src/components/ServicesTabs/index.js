@@ -1,17 +1,20 @@
 import React, {useContext} from 'react';
 import { Text, Block, Button, theme } from 'galio-framework'
 import { ScrollView } from 'react-native-gesture-handler';
-import { RefreshControl, Pressable, View, Image} from 'react-native';
+import { RefreshControl, Pressable, View, Image, TouchableOpacity} from 'react-native';
 import { Box } from "@react-native-material/core";
 import API from '../../services/api';
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import {  ActivityIndicator } from "@react-native-material/core";
 import { style } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 import { ListItem } from '@rneui/themed';
+import { useNavigation } from '@react-navigation/native';
 
 //TODO: Adicionar push-refresh
 
 export default function ServicesTabs() {
+  const navigation = useNavigation();
+
   const tabs = [
     { name: 'Solicitados', selectedColor: '#FFB81C', icon: require('../../assets/icons/Solicitados-icon.png')},
     { name: 'Concluídos', selectedColor: '#218272', icon: require('../../assets/icons/Concluidos-icon.png')},
@@ -70,16 +73,22 @@ export default function ServicesTabs() {
       let elements = [];
       show.forEach((element, index) => {
         elements.push(
-          <ListItem key={index} containerStyle={{ backgroundColor: 'transparent', marginBottom: 10 }}>
-            <ListItem.Content flexDirection={'row'} justifyContent={'space-between'}>
-              <View style={{ flexDirection: 'column' }}>
-                <ListItem.Title>{element.title.length <= 30? element.title : element.title.substring(0,30)+"..."}</ListItem.Title>
-                <ListItem.Subtitle>{element.description.length <= 50 ? element.description : element.description.substring(0, 50)  + "..."}</ListItem.Subtitle>
-                <Text style={{ marginTop: 10 }}>{element.created_at}</Text>
-              </View>
-              <Icon name="chevron-right" style={{ alignSelf: 'center'}}/>
-            </ListItem.Content>
-          </ListItem>
+          <TouchableOpacity key={index} onPress={() => navigation.navigate('Order', element)}>
+            <ListItem key={index} containerStyle={{ backgroundColor: 'transparent', marginBottom: 10 }}>
+              
+              <ListItem.Content flexDirection={'row'} justifyContent={'space-between'}>
+                <View style={{ flexDirection: 'column' }}>
+                  <ListItem.Title>{element.title.length <= 30? element.title : element.title.substring(0,30)+"..."}</ListItem.Title>
+                  <ListItem.Subtitle>{element.description.length <= 50 ? element.description : element.description.substring(0, 50)  + "..."}</ListItem.Subtitle>
+                  <Text style={{ marginTop: 10 }}>{element.created_at}</Text>
+                </View>
+                <Icon name="chevron-right" style={{ alignSelf: 'center'}}/>
+                  
+                
+              </ListItem.Content>
+              
+            </ListItem>
+          </TouchableOpacity>  
         )
       })
       return elements;
