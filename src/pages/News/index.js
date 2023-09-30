@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, SafeAreaView, TouchableOpacity, useWindowDimensions } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet, Text, View, Image, SafeAreaView, useWindowDimensions, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { theme } from '../../styles/theme';
 import { useNavigation } from "@react-navigation/native";
