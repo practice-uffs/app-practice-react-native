@@ -1,6 +1,5 @@
 import React, { useContext, useReducer, useState } from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {View, Text, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
 import Icon, { Icons } from '../../assets/icons/Icons';
 import { theme } from '../../styles/theme';
 import AcademicCalendar from '../AcademicCalendar/AcademicCalendar';
@@ -12,7 +11,7 @@ const InfoPerfil = ({
     const [campus, setCampus] = React.useState("");
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.card}>
                 <View style={styles.person}>
                     <View>
@@ -48,7 +47,7 @@ const InfoPerfil = ({
                     </View>
                 </View>
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 
@@ -63,6 +62,7 @@ const styles = StyleSheet.create({
         top: -35
     },
     container: {
+        marginTop: 100,
         alignItems: 'center',
         justifyContent: 'space-between'
     },
