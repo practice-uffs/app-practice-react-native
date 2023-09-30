@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect }  from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Keyboard, Image, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Keyboard, Image, ScrollView, Dimensions} from 'react-native';
 import { Button, Snackbar } from "@react-native-material/core";
 import { theme } from '../../styles/theme';
 import * as Animatable from 'react-native-animatable';
@@ -17,6 +17,11 @@ import {
 } from '@env';
 
 export default function SignIn({navigation}) {
+
+  const screenHeight = Dimensions.get('screen').height;
+  console.log(screenHeight);
+
+
   const [loading, setLoading] = React.useState(false);
   const [campus, setCampus] = React.useState("");
   const { signIn } = useContext(AuthContext);
@@ -30,6 +35,8 @@ export default function SignIn({navigation}) {
   const [attempts, setAttempts] = useState(LOGIN_ATTEMPTS);
   const [timeoutLogin, setTimeoutLogin] = useState(TIMEOUT_LOGIN);
   const [disabledLogin, setDisabledLogin] = useState(false);
+
+
 
   async function login() {
     setLoading(true);
@@ -97,85 +104,88 @@ export default function SignIn({navigation}) {
 
   }, [timeoutLogin, disabledLogin]);
 
-  return (
-      <View style={styles.container}>
-          <ScrollView style={styles.contentContainer}>
-       
-            <Loader visible={loading} />
-            <View style={styles.backContainer}>
-              <TouchableOpacity
-                style={ styles.button } 
-                onPress= { () => navigation.navigate('Welcome') }
-              >
-                <Icon type={Icons.Ionicons} name={'arrow-back-circle-outline'} color={theme.colors.darkBlue} size={30}/>
-              </TouchableOpacity>
-            </View>
 
-            <Animatable.View style={styles.containerHeader} animation="fadeInLeft" delay={400}>
-              <Text style={ styles.message }>Entre com o seu idUFFS e senha</Text>
-            </Animatable.View>
-            
-            <Animatable.View style={styles.containerForm} animation="fadeInUp" delay={400}>
-              <Input
-                onChangeText={text => handleOnChange(text, 'iduffs')}
-                onFocus={() => handleError(null, 'iduffs')}
-                iconName="account-outline"
-                label="idUFFS"
-                placeholder="Digite seu idUFFS"
-                error={errors.iduffs}
-              />
-              <Input
-                onChangeText={text => handleOnChange(text, 'password')}
-                onFocus={() => handleError(null, 'password')}
-                iconName="lock-outline"
-                label="Senha"
-                placeholder="Digite sua senha"
-                error={errors.password}
-                password
+ 
+      return (
+        <View style={styles.container}>
+            <ScrollView style={styles.contentContainer}>
+        
+              <Loader visible={loading} />
+              <View style={styles.backContainer}>
+                <TouchableOpacity
+                  style={ styles.button } 
+                  onPress= { () => navigation.navigate('Welcome') }
+                >
+                  <Icon type={Icons.Ionicons} name={'arrow-back-circle-outline'} color={theme.colors.darkBlue} size={30}/>
+                </TouchableOpacity>
+              </View>
+
+              <Animatable.View style={styles.containerHeader} animation="fadeInLeft" delay={400}>
+                <Text style={ styles.message }>Entre com o seu idUFFS e senha</Text>
+              </Animatable.View>
+              
+              <Animatable.View style={styles.containerForm} animation="fadeInUp" delay={400}>
+                <Input
+                  onChangeText={text => handleOnChange(text, 'iduffs')}
+                  onFocus={() => handleError(null, 'iduffs')}
+                  iconName="account-outline"
+                  label="idUFFS"
+                  placeholder="Digite seu idUFFS"
+                  error={errors.iduffs}
                 />
-                <Text style={styles.label}>Campus</Text>
-                <View style={styles.campusContainer}>
-                  <CampusPicker
-                  setSelected={setCampus}
+                <Input
+                  onChangeText={text => handleOnChange(text, 'password')}
+                  onFocus={() => handleError(null, 'password')}
+                  iconName="lock-outline"
+                  label="Senha"
+                  placeholder="Digite sua senha"
+                  error={errors.password}
+                  password
                   />
-                </View>
+                  <Text style={styles.label}>Campus</Text>
+                  <View style={styles.campusContainer}>
+                    <CampusPicker
+                    setSelected={setCampus}
+                    />
+                  </View>
 
-              {disabledLogin && 
-              <View style={[styles.blockedLoginMessage]}>
-                <Text style={{float:'left', width: 'auto', paddingRight: 10}}>Bloqueado por: {timeoutLogin} segundos</Text>
-              </View>  
-              }
-              {!disabledLogin && 
-              <View style={styles.blockedLoginMessage}><Text>Tentativas restantes: { attempts }</Text></View>
+                {disabledLogin && 
+                <View style={[styles.blockedLoginMessage]}>
+                  <Text style={{float:'left', width: 'auto', paddingRight: 10}}>Bloqueado por: {timeoutLogin} segundos</Text>
+                </View>  
+                }
+                {!disabledLogin && 
+                <View style={styles.blockedLoginMessage}><Text>Tentativas restantes: { attempts }</Text></View>
+                }
+              
+              <Button title="Entrar"
+                disabled={(inputs.iduffs == '' || inputs.password=='' || !campus || disabledLogin || loading )}
+                loading={loading}
+                uppercase={false}
+                loadingIndicatorPosition="overlay"
+                onPress={validate}
+                style={styles.entrar}/>
+
+              </Animatable.View>
+
+              <Animatable.View delay={800} animation="fadeInRight"  style={styles.logo}>
+                  <SvgXml xml={logo} style={{scale: 0.45, opacity: 0.3}}/>
+              </Animatable.View>
+
+      
+
+              {errorMessage ?
+                <Snackbar
+                  message={errorMessage}
+                  action={<Button variant="text" title="Fechar" color={"#fff"} compact onPress={() => setErrorMessage(null)}/>}
+                  style={{ position: "absolute", start: 16, end: 16, bottom: '28%', backgroundColor:"#2F7B9A", zIndex: 99}}
+                /> : null
               }
             
-            <Button title="Entrar"
-              disabled={(inputs.iduffs == '' || inputs.password=='' || !campus || disabledLogin || loading )}
-              loading={loading}
-              uppercase={false}
-              loadingIndicatorPosition="overlay"
-              onPress={validate}
-              style={styles.entrar}/>
+            </ScrollView>
 
-            </Animatable.View>
-
-            <Animatable.View delay={800} animation="fadeInRight"  style={styles.logo}>
-                <SvgXml xml={logo} style={{scale: 0.45, opacity: 0.3}}/>
-            </Animatable.View>
-
-    
-
-            {errorMessage ?
-              <Snackbar
-                message={errorMessage}
-                action={<Button variant="text" title="Fechar" color={"#fff"} compact onPress={() => setErrorMessage(null)}/>}
-                style={{ position: "absolute", start: 16, end: 16, bottom: '28%', backgroundColor:"#2F7B9A", zIndex: 99}}
-              /> : null
-            }
-           
-          </ScrollView>
-
-          <View style={{width: '100%', flex: 1, bottom: '0%',position: 'absolute'}}>
+            {(screenHeight > 650)?
+            <View style={{width: '100%', flex: 1, bottom: '0%',position: 'absolute'}}>
               <Animatable.View delay={1000} animation="fadeInUp"  style={styles.svgMountain1}>
                     <SvgXml xml={montanha1} style={{scale: 0.45}}/>
               </Animatable.View>
@@ -188,10 +198,11 @@ export default function SignIn({navigation}) {
               <Animatable.View delay={1300} animation="fadeInUp"  style={styles.sol}>
                 <SvgXml xml={sol} style={{scale: 0.1}}/>
               </Animatable.View>
-              
             </View>
-        </View>
-  );
+            : null }
+          </View>
+      );
+    
 } 
 
 const styles = StyleSheet.create({
