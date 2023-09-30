@@ -24,7 +24,7 @@ const Input = ({
                   ? theme.colors.redAlert
                   : isFocused
                   ? theme.colors.darkBlue
-                  : theme.colors.greyText,
+                  : '#c3ccd6',
                 alignItems: 'center',
               },
             ]}>
@@ -70,9 +70,10 @@ const style = StyleSheet.create({
     inputContainer: {
       height: 55,
       backgroundColor: theme.colors.whiteBackground,
+      borderColor: '#c3ccd6',
       flexDirection: 'row',
       paddingHorizontal: 15,
-      borderWidth: 0.5,
+      borderWidth: 2,
       borderRadius: 8
     },
   });

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect }  from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Keyboard, Image} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Keyboard, Image, ScrollView} from 'react-native';
 import { Button, Snackbar } from "@react-native-material/core";
 import { theme } from '../../styles/theme';
 import * as Animatable from 'react-native-animatable';
@@ -98,96 +98,106 @@ export default function SignIn({navigation}) {
   }, [timeoutLogin, disabledLogin]);
 
   return (
-    <SafeAreaView style={{backgroundColor: theme.colors.whiteBackground, flex: 1}}>
-      <Loader visible={loading} />
-      <View style={styles.backContainer}>
-        <TouchableOpacity
-          style={ styles.button } 
-          onPress= { () => navigation.navigate('Welcome') }
-        >
-          <Icon type={Icons.Ionicons} name={'arrow-back-circle-outline'} color={theme.colors.darkBlue} size={30}/>
-        </TouchableOpacity>
-      </View>
-
-      <Animatable.View style={styles.containerHeader} animation="fadeInLeft" delay={400}>
-        <Text style={ styles.message }>Entre com o seu idUFFS e senha</Text>
-      </Animatable.View>
-      
-      <Animatable.View style={styles.containerForm} animation="fadeInUp" delay={400}>
-        <Input
-          onChangeText={text => handleOnChange(text, 'iduffs')}
-          onFocus={() => handleError(null, 'iduffs')}
-          iconName="account-outline"
-          label="idUFFS"
-          placeholder="Digite seu idUFFS"
-          error={errors.iduffs}
-        />
-        <Input
-          onChangeText={text => handleOnChange(text, 'password')}
-          onFocus={() => handleError(null, 'password')}
-          iconName="lock-outline"
-          label="Senha"
-          placeholder="Digite sua senha"
-          error={errors.password}
-          password
-          />
-          <View style={styles.campusContainer}>
-            <CampusPicker
-            setSelected={setCampus}
-            dropdownWidth={300}
-            dropdownRight={-20}
-            dropdownTop={-10}
-            width={415}
-            />
-          </View>
-        {disabledLogin && 
-        <View style={[styles.blockedLoginMessage]}>
-          <Text style={{float:'left', width: 'auto', paddingRight: 10}}>Bloqueado por: {timeoutLogin} segundos</Text>
-        </View>  
-        }
-        {!disabledLogin && 
-        <View style={styles.blockedLoginMessage}><Text>Tentativas restantes: { attempts }</Text></View>
-        }
+      <View style={styles.container}>
+          <ScrollView style={styles.contentContainer}>
        
-       <Button title="Entrar"
-        disabled={(inputs.iduffs == '' || inputs.password=='' || !campus || disabledLogin || loading )}
-        loading={loading}
-        uppercase={false}
-        loadingIndicatorPosition="overlay"
-        onPress={validate}
-        style={styles.entrar}/>
+            <Loader visible={loading} />
+            <View style={styles.backContainer}>
+              <TouchableOpacity
+                style={ styles.button } 
+                onPress= { () => navigation.navigate('Welcome') }
+              >
+                <Icon type={Icons.Ionicons} name={'arrow-back-circle-outline'} color={theme.colors.darkBlue} size={30}/>
+              </TouchableOpacity>
+            </View>
 
-      </Animatable.View>
+            <Animatable.View style={styles.containerHeader} animation="fadeInLeft" delay={400}>
+              <Text style={ styles.message }>Entre com o seu idUFFS e senha</Text>
+            </Animatable.View>
+            
+            <Animatable.View style={styles.containerForm} animation="fadeInUp" delay={400}>
+              <Input
+                onChangeText={text => handleOnChange(text, 'iduffs')}
+                onFocus={() => handleError(null, 'iduffs')}
+                iconName="account-outline"
+                label="idUFFS"
+                placeholder="Digite seu idUFFS"
+                error={errors.iduffs}
+              />
+              <Input
+                onChangeText={text => handleOnChange(text, 'password')}
+                onFocus={() => handleError(null, 'password')}
+                iconName="lock-outline"
+                label="Senha"
+                placeholder="Digite sua senha"
+                error={errors.password}
+                password
+                />
+                <Text style={styles.label}>Campus</Text>
+                <View style={styles.campusContainer}>
+                  <CampusPicker
+                  setSelected={setCampus}
+                  />
+                </View>
 
-      <Animatable.View delay={1000} animation="fadeInUp"  style={styles.svgMountain1}>
-            <SvgXml xml={montanha1} style={{scale: 0.4}}/>
-      </Animatable.View>
-      <Animatable.View delay={800} animation="fadeInUp"  style={styles.svgMountain2}>
-            <SvgXml xml={montanha2} style={{scale: 0.4}}/>
-      </Animatable.View>
-      <Animatable.View delay={600} animation="fadeInUp"  style={styles.svgMountain3}>
-            <SvgXml xml={montanha3} style={{scale: 0.4}}/>
-      </Animatable.View>
-      <Animatable.View delay={1300} animation="fadeInUp"  style={styles.sol}>
-        <SvgXml xml={sol} style={{scale: 0.1}}/>
-      </Animatable.View>
-      <Animatable.View delay={800} animation="fadeInRight"  style={styles.logo}>
-        <SvgXml xml={logo} style={{scale: 0.5, opacity: 0.5}}/>
-      </Animatable.View>
-      {errorMessage ?
-        <Snackbar
-          message={errorMessage}
-          action={<Button variant="text" title="Fechar" color={"#fff"} compact onPress={() => setErrorMessage(null)}/>}
-          style={{ position: "absolute", start: 16, end: 16, bottom: 16, backgroundColor:"#2F7B9A"}}
-        /> : null
-      }
-    </SafeAreaView>
+              {disabledLogin && 
+              <View style={[styles.blockedLoginMessage]}>
+                <Text style={{float:'left', width: 'auto', paddingRight: 10}}>Bloqueado por: {timeoutLogin} segundos</Text>
+              </View>  
+              }
+              {!disabledLogin && 
+              <View style={styles.blockedLoginMessage}><Text>Tentativas restantes: { attempts }</Text></View>
+              }
+            
+            <Button title="Entrar"
+              disabled={(inputs.iduffs == '' || inputs.password=='' || !campus || disabledLogin || loading )}
+              loading={loading}
+              uppercase={false}
+              loadingIndicatorPosition="overlay"
+              onPress={validate}
+              style={styles.entrar}/>
+
+            </Animatable.View>
+
+            <Animatable.View delay={800} animation="fadeInRight"  style={styles.logo}>
+                <SvgXml xml={logo} style={{scale: 0.45, opacity: 0.3}}/>
+            </Animatable.View>
+
+    
+
+            {errorMessage ?
+              <Snackbar
+                message={errorMessage}
+                action={<Button variant="text" title="Fechar" color={"#fff"} compact onPress={() => setErrorMessage(null)}/>}
+                style={{ position: "absolute", start: 16, end: 16, bottom: '28%', backgroundColor:"#2F7B9A", zIndex: 99}}
+              /> : null
+            }
+           
+          </ScrollView>
+
+          <View style={{width: '100%', flex: 1, bottom: '0%',position: 'absolute'}}>
+              <Animatable.View delay={1000} animation="fadeInUp"  style={styles.svgMountain1}>
+                    <SvgXml xml={montanha1} style={{scale: 0.45}}/>
+              </Animatable.View>
+              <Animatable.View delay={800} animation="fadeInUp"  style={styles.svgMountain2}>
+                    <SvgXml xml={montanha2} style={{scale: 0.50}}/>
+              </Animatable.View>
+              <Animatable.View delay={600} animation="fadeInUp"  style={styles.svgMountain3}>
+                    <SvgXml xml={montanha3} style={{scale: 0.45}}/>
+              </Animatable.View>
+              <Animatable.View delay={1300} animation="fadeInUp"  style={styles.sol}>
+                <SvgXml xml={sol} style={{scale: 0.1}}/>
+              </Animatable.View>
+              
+            </View>
+        </View>
   );
 } 
 
 const styles = StyleSheet.create({
   backContainer:{
-    width: '100%'
+    width: '100%',
+    marginTop: '5%'
   },
   button:{
     width: '20%',
@@ -208,17 +218,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 14
   },
+
   container: {
     flex: 1,
-    backgroundColor: theme.colors.whiteBackground,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
+    backgroundColor: '#fff',
+},
+contentContainer: {
+    flexGrow: 1,
+},
   containerHeader: {
     width: '100%',
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginTop: '10%',
+    marginBottom: '7%'
   },
 
   containerForm: {
@@ -234,12 +247,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   input: {
-    marginBottom: 20, 
+    marginBottom: '5%', 
     paddingLeft: 0
 
   },
   message: {
-    marginTop: 10,
+    marginTop: '2.5%',
     fontSize: 20,
     fontWeight: 'bold',
     color: '#003753',
@@ -269,41 +282,65 @@ const styles = StyleSheet.create({
     width: 120,
     height: 40,
     justifyContent: 'center',
-    left: 120,
-    top: 15
+    alignSelf: 'center',
+    top: 15,
+    marginBottom: 300,
   },
   svgMountain1: {
     width: '100%',
     zIndex: 4,
     position: 'absolute',
-    top: 700
+    right: 55,
+    top: -120,
   },
   svgMountain2: {
     width: '100%',
     zIndex: 3,
     position: 'absolute',
-    top: 680
+    right: 90,
+    top: -160
   },
   svgMountain3: {
     width: '100%',
     zIndex: 2,
     position: 'absolute',
-    top: 680
+    right: 30,
+    top: -120
   },
   sol: {
     zIndex: 1,
     position: 'absolute',
-    top: 710,
-    left: 120
+    left: 80,
+    top: -100
+
   },
   campusContainer: {
-    position: 'absolute',
-    top: 195,
-    zIndex: 6
+    width: '100%',
+    backgroundColor: 'white',
+    borderColor: '#c3ccd6',
+    minHeight: 55,
+    paddingTop: 5,
+    backgroundColor: theme.colors.whiteBackground,
+    borderWidth: 2,
+    borderRadius: 8
+
+  },
+  label: {
+    marginVertical: 5,
+    fontSize: 14,
+    color: theme.colors.darkBlue,
+  },
+  inputContainer: {
+    height: 55,
+    backgroundColor: theme.colors.whiteBackground,
+    paddingHorizontal: 15,
+    borderWidth: 0.5,
+    borderRadius: 8
   },
   logo: {
     width: '100%',
     position: 'absolute',
     left: 110,
+    top: 0
   }
 });
