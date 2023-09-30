@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
 import { Text, Block, Button, theme } from 'galio-framework'
-import { ScrollView } from 'react-native-gesture-handler';
-import { RefreshControl, Pressable, View, Image, TouchableOpacity} from 'react-native';
+import { RefreshControl, Pressable, View, Image, ScrollView, TouchableOpacity} from 'react-native';
 import { Box } from "@react-native-material/core";
 import API from '../../services/api';
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";

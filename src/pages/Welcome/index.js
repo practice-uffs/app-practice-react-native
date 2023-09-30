@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground} from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions} from 'react-native';
 import { theme } from '../../styles/theme';
 import * as Animatable from 'react-native-animatable';
 import { SvgXml } from 'react-native-svg';
@@ -7,7 +7,8 @@ import { wave1, wave2, wave3, wave4 } from './svg';
 
 export default function Welcome({navigation}) {
   const B = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
-  
+  const screenHeight = Dimensions.get('screen').height;
+
   return (
     <View style={styles.container}>
       <View style={styles.containerImage}>
@@ -23,6 +24,7 @@ export default function Welcome({navigation}) {
       <View style={styles.containerTitle}>
         <Text style={styles.title}>Criamos <B>soluções tecnológicas</B> para <B>aprimorar</B> o ambiente acadêmico.</Text>
       </View>
+      
     
       <Animatable.View delay={600} animation="fadeInUp" style={styles.containerButton}>
         <TouchableOpacity 
@@ -34,21 +36,27 @@ export default function Welcome({navigation}) {
         </TouchableOpacity>
       </Animatable.View>
 
+
+      {(screenHeight > 650)?
       <Animatable.View delay={1200} animation="fadeInUp"  style={styles.svgWave}>
           <SvgXml xml={wave3} width="100%" height="100%" />
       </Animatable.View>
-    
+      : null }   
+      {(screenHeight > 650)?    
       <Animatable.View delay={400} animation="fadeInUp"  style={styles.svgWave}>
           <SvgXml xml={wave2} width="100%" height="100%" />
       </Animatable.View>
-    
+      : null }
+      {(screenHeight > 650)?
       <Animatable.View delay={100} animation="fadeInUp"  style={styles.svgWave}>
           <SvgXml xml={wave4} width="100%" height="100%" />
       </Animatable.View>
-      
+      : null }
+      {(screenHeight > 650)?
       <Animatable.View delay={800} animation="fadeInUp"  style={styles.svgWave}>
             <SvgXml xml={wave1} width="100%" height="100%" />
       </Animatable.View>
+       : null }
     </View>
   );
 }
@@ -96,7 +104,7 @@ const styles = StyleSheet.create({
     margin: 10,
     fontSize: 24, 
     paddingHorizontal: 50,
-    paddingVertical: 75,
+    paddingBottom: 75,
     fontWeight: '500'
   },
   svgWave: {
