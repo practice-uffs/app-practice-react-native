@@ -11,7 +11,7 @@ import Aura from '../Aura';
 import Header from '../../components/Header';
 
 import { Entypo } from '@expo/vector-icons'
-
+import Library from '../library';
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator(){
@@ -87,6 +87,18 @@ export default function TabNavigator(){
                         ),
                         headerShown: false
                     }} 
+                />
+
+                <Tab.Screen
+                    name="Biblioteca" 
+                    component={Library}
+                    options={{
+                        tabBarIcon: ({size, color}) => (
+                            <Entypo name="book" size={size} color={color} />
+                        ),
+                        headerShown: false
+                    }} 
+
                 />
             
             </Tab.Navigator>
