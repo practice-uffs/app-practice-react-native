@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, View } from 'react-native';
-
+import CalendarioAcademico from '../CalendarioAcademico';
 import Services from '../Services';
 import QrCode from '../QrCode';
 import NewsFeed from '../NewsFeed';
@@ -99,6 +99,17 @@ export default function TabNavigator(){
                         headerShown: false
                     }} 
 
+                />
+
+                <Tab.Screen 
+                    name="Calendário" 
+                    component={CalendarioAcademico}
+                    options={{
+                        tabBarIcon: ({size, color}) => (
+                            <Entypo name="calendar" size={size} color={color} />
+                        ),
+                        headerShown: false
+                    }} 
                 />
             
             </Tab.Navigator>
