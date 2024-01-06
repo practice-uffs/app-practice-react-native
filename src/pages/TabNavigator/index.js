@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, View } from 'react-native';
-
+import CalendarioAcademico from '../CalendarioAcademico';
 import Services from '../Services';
 import QrCode from '../QrCode';
 import NewsFeed from '../NewsFeed';
@@ -11,7 +11,7 @@ import Aura from '../Aura';
 import Header from '../../components/Header';
 
 import { Entypo } from '@expo/vector-icons'
-
+import Library from '../library';
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator(){
@@ -84,6 +84,29 @@ export default function TabNavigator(){
                     options={{
                         tabBarIcon: ({size, color}) => (
                             <Entypo name="bug" size={size} color={color} />
+                        ),
+                        headerShown: false
+                    }} 
+                />
+
+                <Tab.Screen
+                    name="Biblioteca" 
+                    component={Library}
+                    options={{
+                        tabBarIcon: ({size, color}) => (
+                            <Entypo name="book" size={size} color={color} />
+                        ),
+                        headerShown: false
+                    }} 
+
+                />
+
+                <Tab.Screen 
+                    name="Calendário" 
+                    component={CalendarioAcademico}
+                    options={{
+                        tabBarIcon: ({size, color}) => (
+                            <Entypo name="calendar" size={size} color={color} />
                         ),
                         headerShown: false
                     }} 
