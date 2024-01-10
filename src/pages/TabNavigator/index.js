@@ -7,6 +7,7 @@ import QrCode from '../QrCode';
 import NewsFeed from '../NewsFeed';
 import FuncionalitySamples from '../FuncionalitySamples';
 import Aura from '../Aura';
+import Bib from '../Biblioteca';
 
 import Header from '../../components/Header';
 
@@ -87,6 +88,18 @@ export default function TabNavigator(){
                         ),
                         headerShown: false
                     }} 
+                />
+
+                <Tab.Screen
+                    name="Biblioteca" 
+                    component={Bib}
+                    options={{
+                        tabBarIcon: ({size, color}) => (
+                            <Entypo name="book" size={size} color={color} />
+                        ),
+                        headerShown: false
+                    }} 
+
                 />
             
             </Tab.Navigator>
